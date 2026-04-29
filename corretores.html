@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corretores de Elite - Playbook Estratégico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        
+        :root {
+            --elite-blue: #2E5BFF;
+            --elite-dark: #050505;
+            --elite-accent: #00D1FF;
+        }
+
+        body { font-family: 'Inter', sans-serif; }
+        
+        .bg-elite-blue { background-color: var(--elite-blue); }
+        .text-elite-blue { color: var(--elite-blue); }
+        .border-elite-blue { border-color: var(--elite-blue); }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 10px; }
+        
+        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .sidebar-item-active {
+            background: rgba(46, 91, 255, 0.15);
+            border-left: 4px solid var(--elite-blue);
+            color: white !important;
+        }
+
+        .submenu-item {
+            transition: all 0.2s;
+        }
+        .submenu-item:hover {
+            color: var(--elite-blue);
+            padding-left: 1.25rem;
+        }
+
+        .premium-gradient {
+            background: linear-gradient(135deg, #050505 0%, #1a1a1a 100%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 overflow-hidden text-slate-900">
+
+    <div class="flex h-screen overflow-hidden text-left">
+        <!-- Barra Lateral -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-[#050505] text-slate-100 transition-transform duration-300 -translate-x-full lg:relative lg:translate-x-0 shadow-2xl">
+            <div class="flex flex-col h-full">
+                <!-- Secção do Logótipo -->
+                <div class="p-8 flex items-center gap-4 border-b border-white/5 shrink-0">
+                    <div class="w-12 h-12 bg-elite-blue rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/40">
+                         <i data-lucide="shield-check" class="text-white w-7 h-7 fill-white/20"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-black text-xl leading-none tracking-tighter uppercase italic">ELITE<span class="text-elite-blue">.</span>CORRETORES</h1>
+                        <p class="text-[8px] text-blue-400 font-black uppercase tracking-[0.3em] mt-1 italic">High Performance v4.0</p>
+                    </div>
+                </div>
+
+                <!-- Navegação -->
+                <div class="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar">
+                    <button onclick="navigateTo('dashboard')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-bold text-slate-400 hover:bg-white/5 hover:text-white" data-tab="dashboard">
+                        <i data-lucide="layout-dashboard" class="w-5 h-5"></i><span>Dashboard Elite</span>
+                    </button>
+
+                    <!-- MODALIDADES -->
+                    <div class="pt-6 pb-2">
+                        <p class="px-4 text-slate-600 font-black text-[10px] uppercase tracking-[0.2em] mb-3">Modelos e Regras</p>
+                        
+                        <!-- PME -->
+                        <div class="mb-2">
+                            <button onclick="toggleSubmenu('pme')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
+                                <i data-lucide="building-2" class="w-[18px] group-hover:text-elite-blue"></i><span>Empresarial (PME)</span>
+                                <i data-lucide="chevron-right" id="icon-pme" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
+                            </button>
+                            <div id="sub-pme" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
+                                <button onclick="navigateTo('pme-contratacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pme-contratacao">Contratação</button>
+                                <button onclick="navigateTo('pme-vigencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pme-vigencia">Vigência</button>
+                                <button onclick="navigateTo('pme-carencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pme-carencia">Carência</button>
+                                <button onclick="navigateTo('pme-documentacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pme-documentacao">Documentação</button>
+                                <button onclick="navigateTo('pme-reajuste')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pme-reajuste">Reajuste</button>
+                                <button onclick="navigateTo('pme-cancelamento')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pme-cancelamento">Cancelamento</button>
+                                <button onclick="navigateTo('pme-preco')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pme-preco">Análise de Preço</button>
+                            </div>
+                        </div>
+
+                        <!-- ADESÃO -->
+                        <div class="mb-2">
+                            <button onclick="toggleSubmenu('adesao')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
+                                <i data-lucide="users" class="w-[18px] group-hover:text-elite-blue"></i><span>Plano por Adesão</span>
+                                <i data-lucide="chevron-right" id="icon-adesao" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
+                            </button>
+                            <div id="sub-adesao" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
+                                <button onclick="navigateTo('adesao-contratacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="adesao-contratacao">Contratação</button>
+                                <button onclick="navigateTo('adesao-vigencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="adesao-vigencia">Vigência</button>
+                                <button onclick="navigateTo('adesao-carencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="adesao-carencia">Carência</button>
+                                <button onclick="navigateTo('adesao-documentacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="adesao-documentacao">Documentação</button>
+                                <button onclick="navigateTo('adesao-reajuste')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="adesao-reajuste">Reajuste</button>
+                                <button onclick="navigateTo('adesao-cancelamento')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="adesao-cancelamento">Cancelamento</button>
+                                <button onclick="navigateTo('adesao-preco')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="adesao-preco">Preço</button>
+                            </div>
+                        </div>
+
+                        <!-- INDIVIDUAL -->
+                        <div class="mb-2">
+                            <button onclick="toggleSubmenu('individual')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
+                                <i data-lucide="user" class="w-[18px] group-hover:text-elite-blue"></i><span>Plano Individual</span>
+                                <i data-lucide="chevron-right" id="icon-individual" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
+                            </button>
+                            <div id="sub-individual" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
+                                <button onclick="navigateTo('individual-contratacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="individual-contratacao">Contratação</button>
+                                <button onclick="navigateTo('individual-vigencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="individual-vigencia">Vigência</button>
+                                <button onclick="navigateTo('individual-carencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="individual-carencia">Carência</button>
+                                <button onclick="navigateTo('individual-documentacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="individual-documentacao">Documentação</button>
+                                <button onclick="navigateTo('individual-reajuste')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="individual-reajuste">Reajuste</button>
+                                <button onclick="navigateTo('individual-cancelamento')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="individual-cancelamento">Cancelamento</button>
+                                <button onclick="navigateTo('individual-preco')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="individual-preco">Preço</button>
+                            </div>
+                        </div>
+
+                        <!-- PJ 99+ -->
+                        <div class="mb-2">
+                            <button onclick="toggleSubmenu('pj99')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
+                                <i data-lucide="building" class="w-[18px] group-hover:text-elite-blue"></i><span>PJ (+99 vidas)</span>
+                                <i data-lucide="chevron-right" id="icon-pj99" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
+                            </button>
+                            <div id="sub-pj99" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
+                                <button onclick="navigateTo('pj99-contratacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pj99-contratacao">Contratação</button>
+                                <button onclick="navigateTo('pj99-vigencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pj99-vigencia">Vigência</button>
+                                <button onclick="navigateTo('pj99-carencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pj99-carencia">Carência</button>
+                                <button onclick="navigateTo('pj99-documentacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pj99-documentacao">Documentação</button>
+                                <button onclick="navigateTo('pj99-reajuste')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pj99-reajuste">Reajuste</button>
+                                <button onclick="navigateTo('pj99-cancelamento')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pj99-cancelamento">Cancelamento</button>
+                                <button onclick="navigateTo('pj99-preco')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pj99-preco">Análise de Preço</button>
+                            </div>
+                        </div>
+
+                        <!-- ATENDIMENTO -->
+                        <div class="mb-2">
+                            <button onclick="toggleSubmenu('atendimento')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
+                                <i data-lucide="stethoscope" class="w-[18px] group-hover:text-elite-blue"></i><span>Atendimento</span>
+                                <i data-lucide="chevron-right" id="icon-atendimento" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
+                            </button>
+                            <div id="sub-atendimento" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
+                                <button onclick="navigateTo('atendimento-ambulatorial')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="atendimento-ambulatorial">Ambulatorial</button>
+                                <button onclick="navigateTo('atendimento-hospitalar')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="atendimento-hospitalar">Hospitalar</button>
+                                <button onclick="navigateTo('atendimento-sob')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="atendimento-sob">Sem Obstetrícia</button>
+                                <button onclick="navigateTo('atendimento-cob')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="atendimento-cob">Com Obstetrícia</button>
+                                <button onclick="navigateTo('atendimento-completo')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="atendimento-completo">Plano Completo</button>
+                            </div>
+                        </div>
+
+                        <!-- ACOMODAÇÃO -->
+                        <div class="mb-2">
+                            <button onclick="toggleSubmenu('acomodacao')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
+                                <i data-lucide="bed" class="w-[18px] group-hover:text-elite-blue"></i><span>Acomodação</span>
+                                <i data-lucide="chevron-right" id="icon-acomodacao" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
+                            </button>
+                            <div id="sub-acomodacao" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
+                                <button onclick="navigateTo('acomodacao-enfermaria')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="acomodacao-enfermaria">Enfermaria</button>
+                                <button onclick="navigateTo('acomodacao-apartamento')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="acomodacao-apartamento">Apartamento</button>
+                                <button onclick="navigateTo('acomodacao-diferencas')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="acomodacao-diferencas">Quadro Comparativo</button>
+                            </div>
+                        </div>
+
+                        <!-- COPARTICIPAÇÃO -->
+                        <div class="mb-2">
+                            <button onclick="toggleSubmenu('copart')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
+                                <i data-lucide="pie-chart" class="w-[18px] group-hover:text-elite-blue"></i><span>Coparticipação</span>
+                                <i data-lucide="chevron-right" id="icon-copart" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
+                            </button>
+                            <div id="sub-copart" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
+                                <button onclick="navigateTo('copart-total')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="copart-total">Coparticipação Total</button>
+                                <button onclick="navigateTo('copart-parcial')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="copart-parcial">Coparticipação Parcial</button>
+                                <button onclick="navigateTo('copart-sem')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="copart-sem">Sem Coparticipação</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ESTRATÉGIA -->
+                    <div class="pt-4 pb-2 border-t border-white/5 mt-4">
+                        <p class="px-4 text-slate-600 font-black text-[10px] uppercase tracking-[0.2em] mb-2">Estratégia Elite</p>
+                        
+                        <div class="mb-2">
+                            <button onclick="toggleSubmenu('qualificacao')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
+                                <i data-lucide="user-search" class="w-5 h-5 group-hover:text-elite-blue"></i><span>Qualificação & Diagnóstico</span>
+                                <i data-lucide="chevron-right" id="icon-qualificacao" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
+                            </button>
+                            <div id="sub-qualificacao" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
+                                <button onclick="navigateTo('qualificacao-diagnostico')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="qualificacao-diagnostico">Audit. Diagnóstica</button>
+                                <button onclick="navigateTo('qualificacao-spin')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="qualificacao-spin">Método SPIN Elite</button>
+                            </div>
+                        </div>
+
+                        <button onclick="navigateTo('ganchos')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-slate-400 hover:bg-white/5 hover:text-white" data-tab="ganchos">
+                            <i data-lucide="target" class="w-5 h-5"></i><span>Ganchos de Fechamento</span>
+                        </button>
+
+                        <button onclick="navigateTo('followup')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-slate-400 hover:bg-white/5 hover:text-white" data-tab="followup">
+                            <i data-lucide="refresh-cw" class="w-5 h-5"></i><span>Régua de Follow-up</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rodapé -->
+                <div class="p-6 border-t border-white/5 bg-black">
+                    <div class="flex items-center gap-3 text-slate-500">
+                        <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                        <span class="text-[10px] font-black uppercase tracking-widest italic leading-none text-blue-400">Elite Performance 2026</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Área de Conteúdo -->
+        <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+            <header class="h-20 bg-white border-b border-slate-100 flex items-center justify-between px-8 shrink-0 z-10 shadow-sm">
+                <button id="mobile-toggle" class="p-2 lg:hidden bg-slate-100 rounded-lg text-elite-blue"><i data-lucide="menu"></i></button>
+                <div class="flex items-center gap-4 ml-auto">
+                    <button onclick="navigateTo('dashboard')" class="text-xs font-black text-elite-blue uppercase tracking-widest flex items-center gap-2 hover:opacity-80 transition-opacity">
+                         <i data-lucide="home" class="w-4 h-4"></i> Início
+                    </button>
+                </div>
+            </header>
+
+            <main id="content-area" class="flex-1 overflow-y-auto p-6 lg:p-10 bg-[#FBFBFF] custom-scrollbar"></main>
+        </div>
+    </div>
+
+    <!-- Notificação -->
+    <div id="notif" class="fixed bottom-10 left-1/2 -translate-x-1/2 translate-y-32 transition-transform duration-500 bg-[#050505] text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-4 z-[100] border border-white/10">
+        <div class="w-8 h-8 bg-elite-blue rounded-full flex items-center justify-center">
+            <i data-lucide="check" class="w-5 h-5"></i>
+        </div>
+        <span class="font-bold text-sm">Informação pronta para o WhatsApp!</span>
+    </div>
+
+    <script>
+        const carenciaGeral = "• Urgência/emergência: 24 horas\n• Consultas e exames simples: 30 dias\n• Internações e exames complexos: 180 dias\n• Parto: 300 dias\n• Doenças e Lesões Pré-existentes (CPT): 24 meses.";
+        
+        const technicalData = {
+            atendimento: {
+                title: "Segmentação Assistencial",
+                ambulatorial: "🏥 PLANO AMBULATORIAL:\nFocado em atendimentos sem internação.",
+                hospitalar: "🏨 PLANO HOSPITALAR:\nFocado exclusivamente em internações.",
+                sob: "⚖️ SEM OBSTETRÍCIA:\nAmbulatorial + Hospitalar sem parto.",
+                cob: "🤰 COM OBSTETRÍCIA:\nA cobertura mais comum e equilibrada do mercado.",
+                completo: "🌟 PLANO COMPLETO (REFERÊNCIA):\nO padrão máximo exigido pela Lei 9.656/98."
+            },
+            acomodacao: {
+                title: "Acomodação",
+                enfermaria: "👥 ENFERMARIA (COLETIVO):\nQuarto compartilhado com banheiro também compartilhado.",
+                apartamento: "🏠 APARTAMENTO (PRIVATIVO):\nQuarto e banheiro individuais. Liberdade total para acompanhante 24h.",
+                diferencas: "📊 QUADRO COMPARATIVO:\n📍 ENFERMARIA: Coletivo / Econômico\n📍 APARTAMENTO: Privativo / Conforto"
+            },
+            copart: {
+                title: "Coparticipação",
+                total: "🔵 COPARTICIPAÇÃO TOTAL:\nMensalidade mínima. O cliente paga uma taxa em cada uso.",
+                parcial: "⚖️ COPARTICIPAÇÃO PARCIAL:\nTaxas apenas em itens específicos. Consultas básicas isentas.",
+                sem: "⚪ SEM COPARTICIPAÇÃO:\nMensalidade fixa. Uso livre sem taxas extras."
+            },
+            pme: {
+                title: "Plano Empresarial (PME)",
+                contratacao: "• Necessário CNPJ ativo (MEI 180 dias);\n• Mínimo de 2 ou 3 vidas;\n• Aceita Sócios, CLT, Estagiários e Dependentes.",
+                vigencia: "• Análise: 5 a 30 dias.\n• Ativo após a primeira quitação.",
+                carencia: carenciaGeral + "\n🔥 ISENÇÃO TOTAL: Para grupos acima de 30 vidas.",
+                documentacao: "🏢 EMPRESA / TITULAR:\n- CONTRATO SOCIAL\n- CNPJ\n- RG E CPF OU CNH DO TITULAR DO CNPJ\n- E-MAIL\n- TELEFONE\n\n👨‍👩‍👧‍👦 DEPENDENTES:\n- CERTIDÃO DE NASCIMENTO (SE FOR MENOR DE 18 ANOS)\n- RG E CPF OU CNH\n- VÍNCULO COM O TITULAR (CERTIDÃO DE CASAMENTO OU UNIÃO ESTÁVEL)\n\n👷 FUNCIONÁRIO:\n- RG E CPF OU CNH\n- COMPROVANTE DE VÍNCULO COM A EMPRESA (FGTS, E-SOCIAL, CARTEIRA DE TRABALHO)\n- E-MAIL\n- TELEFONE\n\n👨‍👩‍👧‍👦 DEPENDENTES DO FUNCIONÁRIO:\n- CERTIDÃO DE NASCIMENTO (SE FOR MENOR DE 18 ANOS)\n- RG E CPF OU CNH\n- VÍNCULO COM O TITULAR (CERTIDÃO DE CASAMENTO OU UNIÃO ESTÁVEL)\n\n⚠️ OBSERVAÇÃO:\nSe houver plano anterior, solicitar a Carta de Permanência.",
+                reajuste: "• No aniversário do contrato (cada 12 meses).\n• Baseado em Sinistralidade (Uso x Prêmio).",
+                cancelamento: "• Fidelidade comum: 12 ou 24 meses.\n• Aviso prévio de 60 dias (RN 412).",
+                preco: "• Custo agressivo comparado ao Individual."
+            },
+            adesao: {
+                title: "Plano por Adesão",
+                contratacao: "• Destinado a profissionais de entidades de classe.",
+                vigencia: "• Datas fixas (Todo dia 01, 10 ou 20).\n• Taxa de Angariação na assinatura.",
+                carencia: carenciaGeral,
+                documentacao: "- RG e CPF ou CNH;\n- Selfie segurando um documento com foto;\n- Comprovante de Residência;\n- Comprovante de Vinculo à Entidade Associativa;\n- E-mail;\n- Telefone;\n- Carta de Permanência (Se houver plano anterior).\n\n👨‍👩‍👧‍👦 EM CASO DE DEPENDENTE:\n- RG e CPF ou CNH;\n- Comprovante de Vínculo com o Titular.\n\n⚠️ OBSERVAÇÃO:\nSe houver plano anterior, solicitar a Carta de Permanência.",
+                reajuste: "• No aniversário da apólice coletiva da administradora.",
+                cancelamento: "• Pode ser cancelado a qualquer momento.",
+                preco: "• Custo intermediário."
+            },
+            individual: {
+                title: "Plano Individual (PF)",
+                contratacao: "• Contratação direta via CPF.",
+                vigencia: "• Início imediato pós-pagamento.",
+                carencia: carenciaGeral,
+                documentacao: "- RG e CPF ou CNH;\n- Selfie segurando um documento com foto;\n- Comprovante de Residência;\n- E-mail;\n- Telefone;\n- Carta de Permanência (Se houver plano anterior).\n\n👨‍👩‍👧‍👦 EM CASO DE DEPENDENTE:\n- RG e CPF ou CNH;\n- Comprovante de Vínculo com o Titular;\n- Carta de Permanência (Se houver plano anterior).\n\n⚠️ OBSERVAÇÃO:\nSe houver plano anterior, solicitar a Carta de Permanência.",
+                reajuste: "• Anual regulado pelo teto da ANS.",
+                cancelamento: "• Pode ser cancelado a qualquer momento.",
+                preco: "• Maior estabilidade jurídica."
+            },
+            pj99: {
+                title: "Plano PJ (+99 vidas)",
+                contratacao: "• Grandes empresas (+100 vidas);\n• Pode ser formatado como Pré ou Pós-Pagamento.",
+                vigencia: "• Datas negociadas diretamente.",
+                carencia: "🔥 ISENÇÃO TOTAL de carências e CPT conforme RN 195 da ANS.",
+                documentacao: "🏢 EMPRESA / TITULAR:\n- CONTRATO SOCIAL\n- CNPJ\n- RG E CPF OU CNH DO TITULAR DO CNPJ\n- E-MAIL\n- TELEFONE\n\n👨‍👩‍👧‍👦 DEPENDENTES:\n- CERTIDÃO DE NASCIMENTO (SE FOR MENOR DE 18 ANOS)\n- RG E CPF OU CNH\n- VÍNCULO COM O TITULAR (CERTIDÃO DE CASAMENTO OU UNIÃO ESTÁVEL)\n\n👷 FUNCIONÁRIO:\n- RG E CPF OU CNH\n- COMPROVANTE DE VÍNCULO COM A EMPRESA (FGTS, E-SOCIAL, CARTEIRA DE TRABALHO)\n- E-MAIL\n- TELEFONE\n\n👨‍👩‍👧‍👦 DEPENDENTES DO FUNCIONÁRIO:\n- CERTIDÃO DE NASCIMENTO (SE FOR MENOR DE 18 ANOS)\n- RG E CPF OU CNH\n- VÍNCULO COM O TITULAR (CERTIDÃO DE CASAMENTO OU UNIÃO ESTÁVEL)\n\n📊 ANÁLISE TÉCNICA E RISCO:\n- RELATÓRIO DE SINISTRALIDADE DOS ÚLTIMOS 12 MESES\n- DATA DA RENOVAÇÃO\n- RELATÓRIO ANALÍTICO\n- RELAÇÃO DE VIDAS COMPLETA (EXCEL)\n- PERFIL DE UTILIZAÇÃO - Alto uso ou baixo uso? Existência de: Internações recorrentes, Doenças crônicas (sem detalhar dados sensíveis individuais) e Gestante.",
+                reajuste: "• Reajuste Técnico (Loss Ratio) negociado diretamente.",
+                cancelamento: "• Regido pelo contrato máster.",
+                preco: "• Estudo técnico (Capital Global)."
+            }
+        };
+
+        const otherData = {
+            dashboard: { 
+                render: () => `<div class="fade-in space-y-8 text-left">
+                    <div class="premium-gradient p-12 rounded-[3.5rem] text-white shadow-2xl relative overflow-hidden border-b-4 border-blue-600">
+                        <div class="relative z-10 max-w-2xl">
+                            <h1 class="text-6xl font-black italic tracking-tighter uppercase leading-[0.9]">Corretores de Elite<span class="text-blue-500">.</span></h1>
+                            <p class="text-blue-100 text-xl font-medium mt-6 italic">A estrutura técnica completa para o Corretor de Alta Performance.</p>
+                        </div>
+                        <i data-lucide="shield-check" class="absolute right-[-40px] bottom-[-40px] w-96 h-96 opacity-10 -rotate-12"></i>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div onclick="navigateTo('pme-contratacao')" class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm hover:border-blue-500 cursor-pointer transition-all hover:shadow-xl group">
+                            <i data-lucide="building-2" class="text-blue-600 mb-4 group-hover:scale-110"></i>
+                            <h3 class="font-black uppercase italic text-sm">Empresarial PME</h3>
+                        </div>
+                        <div onclick="navigateTo('pj99-contratacao')" class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm hover:border-blue-500 cursor-pointer transition-all hover:shadow-xl group">
+                            <i data-lucide="building" class="text-blue-600 mb-4 group-hover:scale-110"></i>
+                            <h3 class="font-black uppercase italic text-sm">PJ (+99 vidas)</h3>
+                        </div>
+                        <div onclick="navigateTo('ganchos')" class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm hover:border-blue-500 cursor-pointer transition-all hover:shadow-xl group">
+                            <i data-lucide="target" class="text-blue-600 mb-4 group-hover:scale-110"></i>
+                            <h3 class="font-black uppercase italic text-sm">Ganchos Elite</h3>
+                        </div>
+                        <div onclick="navigateTo('qualificacao-diagnostico')" class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm hover:border-blue-500 cursor-pointer transition-all hover:shadow-xl group">
+                            <i data-lucide="user-search" class="text-blue-600 mb-4 group-hover:scale-110"></i>
+                            <h3 class="font-black uppercase italic text-sm">Qualificação</h3>
+                        </div>
+                    </div>
+                </div>` 
+            },
+            ganchos: { 
+                render: () => {
+                    const hookGroups = [
+                        { icon: '🛡️', title: 'GANCHO DE AUTORIDADE', subtitle: 'POSICIONAMENTO DE ESPECIALISTA', objective: 'REDUZIR RESISTÊNCIA', questions: ["Me diz uma coisa: hoje você sente que tem um seguro ou uma parceria real de saúde? Porque a maioria dos planos foca em burocracia, eu foco em proteção financeira.", "Você sabia que 70% das pessoas pagam por coberturas que nunca vão usar? Posso fazer uma auditoria rápida no seu perfil?", "Para eu te indicar o plano correto, preciso saber: você prioriza rede de hospitais premium ou o melhor custo-benefício por procedimento?"] },
+                        { icon: '💎', title: 'GANCHO DE LÓGICA FINANCEIRA', subtitle: 'PARA QUEM JÁ TEM PLANO', objective: 'PROVAR ECONOMIA', questions: ["Se eu te mostrar que você está deixando dinheiro na mesa todo mês com o reajuste atual do seu plano, faz sentido conversarmos?", "Hoje o seu plano é um investmento ou um custo fixo que só sobe? Tenho uma estratégia para transformar isso em economia real.", "Você já ouviu falar em portabilidade inteligente? É como trocar de banco mantendo seus benefícios, mas pagando menos."] },
+                        { icon: '⚠️', title: 'GANCHO DE URGÊNCIA REAL', subtitle: 'ACELERAÇÃO DE DECISÃO', objective: 'EVITAR PROCRASTINAÇÃO', questions: ["Te chamei porque as tabelas de [Mês/Ano] estão para fechar. Quem assinar agora garante a carência reduzida que não existirá no próximo ciclo.", "Acabou de sair uma normativa que pode alterar a entrada de novos dependentes. Quer garantir sua posição antes dessa mudança?", "A cada dia que você adia, é um dia a mais de risco sem cobertura total. Vamos resolver essa pendência hoje?"] },
+                        { icon: '👨‍👩‍👧', title: 'GANCHO EMOCIONAL/FAMÍLIA', subtitle: 'PONTO DE DOR PROFUNDO', objective: 'GERAR RESPONSABILIDADE', questions: ["Se algo acontecer amanhã, você prefere ter um cartão de plano de saúde no bolso ou a incerteza de uma fila de espera?", "Sua família é seu maior patrimônio. O plano de saúde não é para doenças, é para garantir que o seu patrimônio não seja consumido por uma emergência hospitalar.", "Qual é o valor da sua tranquilidade ao saber que seus filhos têm acesso imediato aos melhores pediatras da região?"] }
+                    ];
+
+                    return `<div class="fade-in space-y-10">
+                        <div class="premium-gradient p-12 rounded-[2.5rem] text-white shadow-xl relative overflow-hidden -mx-2 lg:-mx-4 -mt-4 mb-8">
+                            <div class="relative z-10">
+                                <h2 class="text-6xl font-black italic uppercase tracking-tighter leading-none mb-4">Ganchos de Fechamento</h2>
+                                <p class="text-blue-100 font-bold uppercase tracking-widest text-lg">Scripts de alto impacto para Corretores Elite</p>
+                            </div>
+                            <div class="absolute right-[-20px] top-1/2 -translate-y-1/2 opacity-20">
+                                <i data-lucide="zap" class="w-64 h-64"></i>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-12">
+                            ${hookGroups.map(group => `
+                                <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-col space-y-6 hover:shadow-xl transition-all">
+                                    <div>
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="text-2xl">${group.icon}</span>
+                                            <h3 class="font-black text-xl italic uppercase tracking-tighter text-blue-600 leading-none">${group.title}</h3>
+                                        </div>
+                                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">${group.subtitle}</p>
+                                    </div>
+                                    <div class="space-y-3 flex-1">
+                                        ${group.questions.map(q => `
+                                            <div class="group relative">
+                                                <div class="bg-slate-50 p-5 pr-12 rounded-2xl text-slate-600 font-semibold text-sm italic border border-transparent hover:border-blue-200 hover:bg-white cursor-pointer transition-all" onclick="handleCopy('${q.replace(/'/g, "\\'")}')">
+                                                    "${q}"
+                                                    <div class="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100"><i data-lucide="copy" class="w-4 h-4 text-blue-400"></i></div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    <div class="pt-4 mt-auto">
+                                        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 rounded-full text-blue-600">
+                                            <i data-lucide="target" class="w-3.5 h-3.5"></i>
+                                            <span class="text-[9px] font-black uppercase tracking-widest">OBJETIVO: ${group.objective}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>`;
+                }
+            },
+            followup: { 
+                render: () => {
+                    const stages = [
+                        { d: 'D+0', t: 'ENTREGA DE VALOR', m: "Fala [Nome]! Acabei de te enviar a proposta. Note que selecionei a opção [X] especificamente pelo hospital [Y], que você mencionou ser importante. Dá uma olhada e me diz se a rede de atendimento ficou como você esperava.", obj: "VALIDAR REDE" },
+                        { d: 'D+1', t: 'OUVINTE ATIVO', m: "Oi [Nome], conseguiu ler? Alguma dúvida técnica sobre as carências ou sobre a coparticipação? Se preferir, me diz um horário e eu te explico em 2 minutos por áudio.", obj: "TIRAR DÚVIDAS" },
+                        { d: 'D+3', t: 'QUEBRA DE SILÊNCIO', m: "[Nome], notei que você ainda não avançou. Geralmente, quando o cliente para aqui, é por causa do preço ou da rede de hospitais. Qual desses dois pontos está pesando mais aí para gente ajustar?", obj: "ISOLAR OBJEÇÃO" },
+                        { d: 'D+5', t: 'ESCASSEZ ELITE', m: "[Nome], te chamei para avisar que a condição de carência reduzida que conversamos expira em 48h. Depois disso, o sistema vira para a regra padrão. Conseguimos assinar digitalmente hoje para garantir seu benefício?", obj: "GERAR SENSO DE PERDA" },
+                        { d: 'D+7', t: 'DESPEDIDA PROFISSIONAL', m: "[Nome], entendo que agora talvez não seja o momento ideal para você. Vou retirar sua proposta do sistema para manter nossa fila organizada. Se precisar no futuro, sigo à disposição. Grande abraço!", obj: "GATILHO DO DESAPEGO" }
+                    ];
+                    return `<div class="fade-in space-y-10">
+                        <div class="premium-gradient p-10 rounded-b-[3rem] text-white shadow-2xl relative overflow-hidden -mx-6 lg:-mx-10 -mt-10 mb-10 border-b-4 border-blue-500">
+                            <h2 class="text-5xl font-black italic uppercase tracking-tighter mb-2">Régua de Follow-up</h2>
+                            <p class="text-blue-400 font-bold uppercase tracking-[0.3em] text-xs italic">Onde 80% dos fechamentos acontecem</p>
+                        </div>
+                        <div class="space-y-6 pb-12">
+                            ${stages.map(s => `
+                                <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-col lg:flex-row gap-8 transition-all hover:shadow-lg">
+                                    <div class="lg:w-48 shrink-0 flex flex-col justify-center">
+                                        <span class="text-xs font-black text-blue-600 mb-1">${s.d}</span>
+                                        <h3 class="font-black text-xl text-slate-800 uppercase italic leading-none">${s.t}</h3>
+                                    </div>
+                                    <div class="flex-1 space-y-4">
+                                        <div class="bg-slate-50 p-6 rounded-3xl text-slate-700 font-semibold italic text-base cursor-pointer hover:bg-blue-50 transition-all border border-transparent hover:border-blue-100" onclick="handleCopy('${s.m}')">
+                                            "${s.m}"
+                                        </div>
+                                        <div class="flex items-center gap-2 text-slate-400">
+                                            <i data-lucide="crosshair" class="w-3.5 h-3.5"></i>
+                                            <span class="text-[10px] font-bold uppercase tracking-widest">OBJETIVO: ${s.obj}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>`;
+                }
+            },
+            'qualificacao-spin': {
+                render: () => {
+                    const spinData = [
+                        { id: 'S', title: 'SITUAÇÃO', questions: ["Hoje você possui plano ou está buscando agora?", "Quem mais participará desse benefício com você?", "Qual o valor médio que você investe hoje mensalmente?"], color: 'bg-slate-900' },
+                        { id: 'P', title: 'PROBLEMA', questions: ["O que te incomoda no seu atendimento atual?", "Já teve algum procedimento negado ou demora excessiva para consultas?", "Quanto esse problema impacta sua rotina hoje?"], color: 'bg-blue-700' },
+                        { id: 'I', title: 'IMPLICAÇÃO', questions: ["Se essa situação continuar, qual o risco financeiro para sua família?", "E se você precisar de uma emergência hospitalar agora e não tiver a cobertura adequada?", "Quanto você está perdendo em produtividade por não ter rede credenciada próxima?"], color: 'bg-blue-900' },
+                        { id: 'N', title: 'NECESSIDADE', questions: ["Se eu te mostrar uma opção que reduza seu custo e aumente sua rede, você fecharia hoje?", "O quão importante seria ter a tranquilidade de um atendimento premium para seus filhos?", "Faz sentido resolvermos isso agora para você focar no que realmente importa?"], color: 'bg-blue-500' }
+                    ];
+                    return `<div class="fade-in space-y-8">
+                        <div class="premium-gradient p-10 rounded-b-[3rem] text-white shadow-2xl relative overflow-hidden -mx-6 lg:-mx-10 -mt-10 mb-10 border-b-4 border-blue-400">
+                            <h2 class="text-5xl font-black italic uppercase tracking-tighter mb-2">Método SPIN Elite</h2>
+                            <p class="text-blue-400 font-bold uppercase tracking-[0.3em] text-xs">Condução estratégica para o sim</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-10">
+                            ${spinData.map(item => `
+                                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all">
+                                    <div class="flex items-center gap-5 mb-6">
+                                        <div class="w-16 h-16 ${item.color} rounded-2xl flex items-center justify-center text-white text-3xl font-black shadow-lg">${item.id}</div>
+                                        <div>
+                                            <h3 class="font-black text-xl italic uppercase tracking-tighter text-slate-800 leading-none">${item.title}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-3">
+                                        ${item.questions.map(q => `
+                                            <div class="bg-slate-50 p-4 rounded-2xl text-sm font-semibold italic text-slate-600 cursor-pointer hover:bg-blue-50 transition-all" onclick="handleCopy('${q}')">"${q}"</div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>`;
+                }
+            },
+            'qualificacao-diagnostico': {
+                render: () => {
+                    const checklist = [
+                        { q: "Quem será o beneficiário principal?", desc: "Identificar o tomador de decisão." },
+                        { q: "Qual a faixa etária de todos?", desc: "Cálculo técnico imediato." },
+                        { q: "Atualmente possui plano de saúde?", desc: "Ponto de partida para portabilidade." },
+                        { q: "Faz questão de algum hospital ou clínica específica?", desc: "Filtro de rede credenciada." },
+                        { q: "Possui CNPJ ativo (MEI, LTDA, EIRELI)?", desc: "Enquadramento tributário/PME." },
+                        { q: "Vínculo com entidade ou conselho (OAB, CRM)?", desc: "Enquadramento Adesão." },
+                        { q: "Existe alguma cirurgia ou exame complexo previsto?", desc: "Análise de carência e CPT." },
+                        { q: "Já recebeu outra proposta? O que não gostou nela?", desc: "Identificar a concorrência e objeções prévias." }
+                    ];
+                    return `<div class="fade-in space-y-6">
+                        <div class="bg-blue-700 p-10 rounded-3xl text-white shadow-xl flex items-center gap-8 -mx-2">
+                             <div class="p-5 bg-white/10 rounded-3xl"><i data-lucide="clipboard-check" class="w-10 h-10"></i></div>
+                             <div>
+                                <h2 class="text-4xl font-black uppercase italic tracking-tighter leading-none">Auditoria Diagnóstica</h2>
+                                <p class="text-blue-100 text-xs font-bold uppercase tracking-widest mt-2">Diagnóstico de Alta Performance Be Smart</p>
+                             </div>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-12">
+                            ${checklist.map((item, i) => `
+                                <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-start justify-between group hover:border-blue-400 transition-all">
+                                    <div class="flex items-start gap-4">
+                                        <span class="w-8 h-8 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center font-black text-sm shrink-0">${i + 1}</span>
+                                        <div>
+                                            <p class="text-slate-800 font-bold text-base leading-tight">${item.q}</p>
+                                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">${item.desc}</p>
+                                        </div>
+                                    </div>
+                                    <button onclick="handleCopy('${item.q}')" class="p-2 text-slate-300 hover:text-blue-600 transition-all"><i data-lucide="copy" class="w-4 h-4"></i></button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>`;
+                }
+            }
+        };
+
+        function toggleSubmenu(id) {
+            const sub = document.getElementById(`sub-${id}`);
+            const icon = document.getElementById(`icon-${id}`);
+            const isHidden = sub.classList.toggle('hidden');
+            icon.style.transform = isHidden ? 'rotate(0deg)' : 'rotate(90deg)';
+        }
+
+        function handleManualCopy(mod, section) {
+            let text = section ? technicalData[mod][section] : otherData[mod].content;
+            handleCopy(text);
+        }
+
+        function navigateTo(id) {
+            const area = document.getElementById('content-area');
+            let contentHtml = '';
+            document.querySelectorAll('.nav-item, .submenu-item').forEach(el => el.classList.toggle('sidebar-item-active', el.getAttribute('data-tab') === id));
+            
+            if (id.includes('-')) {
+                const parts = id.split('-');
+                const mod = parts[0], section = parts[1];
+                if (otherData[id]) {
+                    const item = otherData[id];
+                    contentHtml = item.render ? item.render() : createGenericView(item.title, item.content, id);
+                } else if (technicalData[mod] && technicalData[mod][section]) {
+                    const item = technicalData[mod];
+                    const titles = { contratacao: "Contratação", vigencia: "Vigência", carencia: "Carência", documentacao: "Documentação", reajuste: "Reajuste", cancelamento: "Cancelamento", preco: "Análise", total: "Coparticipação Total", parcial: "Coparticipação Parcial", sem: "Sem Coparticipação", ambulatorial: "Ambulatorial", hospitalar: "Hospitalar", sob: "Sem Obstetrícia", cob: "Com Obstetrícia", completo: "Plano Completo", enfermaria: "Enfermaria", apartamento: "Apartamento", diferencas: "Comparativo" };
+                    contentHtml = createGenericView(titles[section] || section, item[section], mod, section);
+                }
+            } else {
+                const item = otherData[id];
+                contentHtml = item.render ? item.render() : createGenericView(item.title, item.content, id);
+            }
+            area.innerHTML = contentHtml;
+            lucide.createIcons();
+            if (window.innerWidth < 1024) document.getElementById('sidebar').classList.add('-translate-x-full');
+            area.scrollTo(0, 0);
+        }
+
+        function createGenericView(title, content, mod, section = null) {
+            return `<div class="fade-in max-w-4xl mx-auto space-y-8 text-left">
+                <div class="bg-white rounded-[3rem] shadow-xl border overflow-hidden border-slate-100">
+                    <div class="p-10 bg-[#050505] text-white border-b-4 border-blue-600">
+                        <h2 class="text-4xl font-black italic uppercase tracking-tighter">${title}</h2>
+                    </div>
+                    <div class="p-10">
+                        <div class="bg-slate-50 p-8 rounded-3xl border border-dashed border-slate-200">
+                            <p class="whitespace-pre-line text-slate-700 text-lg font-medium leading-relaxed">${content}</p>
+                        </div>
+                        <button onclick="handleManualCopy('${mod}', ${section ? `'${section}'` : 'null'})" class="mt-8 flex items-center gap-3 px-10 py-4 bg-elite-blue text-white rounded-2xl font-black uppercase text-xs shadow-xl hover:scale-105 transition-all">
+                            <i data-lucide="copy" class="w-4 h-4"></i> Copiar Informação
+                        </button>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        function handleCopy(text) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            const notif = document.getElementById('notif');
+            notif.classList.remove('translate-y-32');
+            setTimeout(() => notif.classList.add('translate-y-32'), 2500);
+        }
+
+        document.getElementById('mobile-toggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('-translate-x-full'));
+        window.onload = () => { lucide.createIcons(); navigateTo('dashboard'); };
+    </script>
+</body>
+</html>
