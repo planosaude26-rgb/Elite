@@ -1,578 +1,1345 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corretores de Elite - Playbook Estratégico</title>
+    <title>Apoio às Vendas Be.Smart - Vendas Consultivas</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7e22ce',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                            950: '#3b0764',
+                        },
+                        blue: {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7e22ce',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                            950: '#3b0764',
+                        },
+                        slate: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            200: '#e4e4e7',
+                            300: '#d4d4d8',
+                            400: '#a1a1aa',
+                            500: '#71717a',
+                            600: '#52525b',
+                            700: '#3f3f46',
+                            800: '#27272a',
+                            900: '#000000',
+                            950: '#0a0a0a',
+                        },
+                        secondary: '#10b981',
+                        accent: '#f59e0b',
+                        dark: '#000000'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
-        
-        :root {
-            --elite-blue: #2E5BFF;
-            --elite-dark: #050505;
-            --elite-accent: #00D1FF;
-        }
-
-        body { font-family: 'Inter', sans-serif; }
-        
-        .bg-elite-blue { background-color: var(--elite-blue); }
-        .text-elite-blue { color: var(--elite-blue); }
-        .border-elite-blue { border-color: var(--elite-blue); }
-        
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 10px; }
-        
-        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .module-card { transition: all 0.3s ease; }
+        .module-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .sidebar-item-active {
-            background: rgba(46, 91, 255, 0.15);
-            border-left: 4px solid var(--elite-blue);
-            color: white !important;
-        }
-
-        .submenu-item {
-            transition: all 0.2s;
-        }
-        .submenu-item:hover {
-            color: var(--elite-blue);
-            padding-left: 1.25rem;
-        }
-
-        .premium-gradient {
-            background: linear-gradient(135deg, #050505 0%, #1a1a1a 100%);
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Estilos específicos para Impressão */
+        @media print {
+            body { display: block; height: auto !important; overflow: visible !important; background-color: white; }
+            aside, header { display: none !important; }
+            main { height: auto !important; overflow: visible !important; display: block !important; width: 100% !important; background-color: white !important; }
+            #content-area { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
+            .no-print { display: none !important; }
+            .shadow-lg, .shadow-sm { box-shadow: none !important; }
+            .border { border: 1px solid #e2e8f0 !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            @page { margin: 1cm; }
         }
     </style>
 </head>
-<body class="bg-slate-50 overflow-hidden text-slate-900">
+<body class="text-slate-800 h-screen flex flex-col md:flex-row overflow-hidden">
 
-    <div class="flex h-screen overflow-hidden text-left">
-        <!-- Barra Lateral -->
-        <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-[#050505] text-slate-100 transition-transform duration-300 -translate-x-full lg:relative lg:translate-x-0 shadow-2xl">
-            <div class="flex flex-col h-full">
-                <!-- Secção do Logótipo -->
-                <div class="p-8 flex items-center gap-4 border-b border-white/5 shrink-0">
-                    <div class="w-12 h-12 bg-elite-blue rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/40">
-                         <i data-lucide="shield-check" class="text-white w-7 h-7 fill-white/20"></i>
-                    </div>
-                    <div>
-                        <h1 class="font-black text-xl leading-none tracking-tighter uppercase italic">ELITE<span class="text-elite-blue">.</span>CORRETORES</h1>
-                        <p class="text-[8px] text-blue-400 font-black uppercase tracking-[0.3em] mt-1 italic">High Performance v4.0</p>
-                    </div>
-                </div>
+    <aside class="w-full md:w-80 bg-slate-900 text-slate-300 flex flex-col h-full overflow-y-auto shrink-0 shadow-xl z-10">
+        <div class="p-6 bg-slate-950 border-b border-slate-800">
+            <h1 class="text-xl font-bold text-white flex items-center gap-2">
+                <svg class="w-6 h-6 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                Apoio às Vendas Be.Smart
+            </h1>
+            <p class="text-xs text-slate-400 mt-1">Vendas Consultivas & Neurovendas</p>
+        </div>
+        
+        <div class="p-4 flex-1">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4 px-2">Menu de Navegação</p>
+            <nav id="main-menu" class="space-y-1">
+                <!-- Menu items generated by JS -->
+            </nav>
+        </div>
+        
+        <div class="p-4 bg-slate-800/50 mt-auto border-t border-slate-800">
+            <button onclick="resetPlaybook()" class="w-full py-2 px-4 bg-slate-700 hover:bg-slate-600 text-white rounded transition-colors text-sm font-medium flex justify-center items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                Reiniciar Diagnóstico
+            </button>
+        </div>
+    </aside>
 
-                <!-- Navegação -->
-                <div class="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar">
-                    <button onclick="navigateTo('dashboard')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-bold text-slate-400 hover:bg-white/5 hover:text-white" data-tab="dashboard">
-                        <i data-lucide="layout-dashboard" class="w-5 h-5"></i><span>Dashboard Elite</span>
-                    </button>
-
-                    <!-- MODALIDADES -->
-                    <div class="pt-6 pb-2">
-                        <p class="px-4 text-slate-600 font-black text-[10px] uppercase tracking-[0.2em] mb-3">Modelos e Regras</p>
-                        
-                        <!-- PME -->
-                        <div class="mb-2">
-                            <button onclick="toggleSubmenu('pme')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
-                                <i data-lucide="building-2" class="w-[18px] group-hover:text-elite-blue"></i><span>Empresarial (PME)</span>
-                                <i data-lucide="chevron-right" id="icon-pme" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
-                            </button>
-                            <div id="sub-pme" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
-                                <button onclick="navigateTo('pme-contratacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pme-contratacao">Contratação</button>
-                                <button onclick="navigateTo('pme-vigencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pme-vigencia">Vigência</button>
-                                <button onclick="navigateTo('pme-carencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pme-carencia">Carência</button>
-                                <button onclick="navigateTo('pme-documentacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pme-documentacao">Documentação</button>
-                                <button onclick="navigateTo('pme-reajuste')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pme-reajuste">Reajuste</button>
-                                <button onclick="navigateTo('pme-cancelamento')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pme-cancelamento">Cancelamento</button>
-                                <button onclick="navigateTo('pme-preco')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pme-preco">Análise de Preço</button>
-                            </div>
-                        </div>
-
-                        <!-- ADESÃO -->
-                        <div class="mb-2">
-                            <button onclick="toggleSubmenu('adesao')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
-                                <i data-lucide="users" class="w-[18px] group-hover:text-elite-blue"></i><span>Plano por Adesão</span>
-                                <i data-lucide="chevron-right" id="icon-adesao" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
-                            </button>
-                            <div id="sub-adesao" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
-                                <button onclick="navigateTo('adesao-contratacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="adesao-contratacao">Contratação</button>
-                                <button onclick="navigateTo('adesao-vigencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="adesao-vigencia">Vigência</button>
-                                <button onclick="navigateTo('adesao-carencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="adesao-carencia">Carência</button>
-                                <button onclick="navigateTo('adesao-documentacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="adesao-documentacao">Documentação</button>
-                                <button onclick="navigateTo('adesao-reajuste')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="adesao-reajuste">Reajuste</button>
-                                <button onclick="navigateTo('adesao-cancelamento')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="adesao-cancelamento">Cancelamento</button>
-                                <button onclick="navigateTo('adesao-preco')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="adesao-preco">Preço</button>
-                            </div>
-                        </div>
-
-                        <!-- INDIVIDUAL -->
-                        <div class="mb-2">
-                            <button onclick="toggleSubmenu('individual')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
-                                <i data-lucide="user" class="w-[18px] group-hover:text-elite-blue"></i><span>Plano Individual</span>
-                                <i data-lucide="chevron-right" id="icon-individual" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
-                            </button>
-                            <div id="sub-individual" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
-                                <button onclick="navigateTo('individual-contratacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="individual-contratacao">Contratação</button>
-                                <button onclick="navigateTo('individual-vigencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="individual-vigencia">Vigência</button>
-                                <button onclick="navigateTo('individual-carencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="individual-carencia">Carência</button>
-                                <button onclick="navigateTo('individual-documentacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="individual-documentacao">Documentação</button>
-                                <button onclick="navigateTo('individual-reajuste')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="individual-reajuste">Reajuste</button>
-                                <button onclick="navigateTo('individual-cancelamento')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="individual-cancelamento">Cancelamento</button>
-                                <button onclick="navigateTo('individual-preco')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="individual-preco">Preço</button>
-                            </div>
-                        </div>
-
-                        <!-- PJ 99+ -->
-                        <div class="mb-2">
-                            <button onclick="toggleSubmenu('pj99')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
-                                <i data-lucide="building" class="w-[18px] group-hover:text-elite-blue"></i><span>PJ (+99 vidas)</span>
-                                <i data-lucide="chevron-right" id="icon-pj99" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
-                            </button>
-                            <div id="sub-pj99" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
-                                <button onclick="navigateTo('pj99-contratacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pj99-contratacao">Contratação</button>
-                                <button onclick="navigateTo('pj99-vigencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pj99-vigencia">Vigência</button>
-                                <button onclick="navigateTo('pj99-carencia')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pj99-carencia">Carência</button>
-                                <button onclick="navigateTo('pj99-documentacao')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pj99-documentacao">Documentação</button>
-                                <button onclick="navigateTo('pj99-reajuste')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pj99-reajuste">Reajuste</button>
-                                <button onclick="navigateTo('pj99-cancelamento')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pj99-cancelamento">Cancelamento</button>
-                                <button onclick="navigateTo('pj99-preco')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="pj99-preco">Análise de Preço</button>
-                            </div>
-                        </div>
-
-                        <!-- ATENDIMENTO -->
-                        <div class="mb-2">
-                            <button onclick="toggleSubmenu('atendimento')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
-                                <i data-lucide="stethoscope" class="w-[18px] group-hover:text-elite-blue"></i><span>Atendimento</span>
-                                <i data-lucide="chevron-right" id="icon-atendimento" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
-                            </button>
-                            <div id="sub-atendimento" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
-                                <button onclick="navigateTo('atendimento-ambulatorial')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="atendimento-ambulatorial">Ambulatorial</button>
-                                <button onclick="navigateTo('atendimento-hospitalar')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="atendimento-hospitalar">Hospitalar</button>
-                                <button onclick="navigateTo('atendimento-sob')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="atendimento-sob">Sem Obstetrícia</button>
-                                <button onclick="navigateTo('atendimento-cob')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="atendimento-cob">Com Obstetrícia</button>
-                                <button onclick="navigateTo('atendimento-completo')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="atendimento-completo">Plano Completo</button>
-                            </div>
-                        </div>
-
-                        <!-- ACOMODAÇÃO -->
-                        <div class="mb-2">
-                            <button onclick="toggleSubmenu('acomodacao')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
-                                <i data-lucide="bed" class="w-[18px] group-hover:text-elite-blue"></i><span>Acomodação</span>
-                                <i data-lucide="chevron-right" id="icon-acomodacao" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
-                            </button>
-                            <div id="sub-acomodacao" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
-                                <button onclick="navigateTo('acomodacao-enfermaria')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="acomodacao-enfermaria">Enfermaria</button>
-                                <button onclick="navigateTo('acomodacao-apartamento')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="acomodacao-apartamento">Apartamento</button>
-                                <button onclick="navigateTo('acomodacao-diferencas')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="acomodacao-diferencas">Quadro Comparativo</button>
-                            </div>
-                        </div>
-
-                        <!-- COPARTICIPAÇÃO -->
-                        <div class="mb-2">
-                            <button onclick="toggleSubmenu('copart')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
-                                <i data-lucide="pie-chart" class="w-[18px] group-hover:text-elite-blue"></i><span>Coparticipação</span>
-                                <i data-lucide="chevron-right" id="icon-copart" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
-                            </button>
-                            <div id="sub-copart" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
-                                <button onclick="navigateTo('copart-total')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="copart-total">Coparticipação Total</button>
-                                <button onclick="navigateTo('copart-parcial')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="copart-parcial">Coparticipação Parcial</button>
-                                <button onclick="navigateTo('copart-sem')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="copart-sem">Sem Coparticipação</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ESTRATÉGIA -->
-                    <div class="pt-4 pb-2 border-t border-white/5 mt-4">
-                        <p class="px-4 text-slate-600 font-black text-[10px] uppercase tracking-[0.2em] mb-2">Estratégia Elite</p>
-                        
-                        <div class="mb-2">
-                            <button onclick="toggleSubmenu('qualificacao')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 font-bold text-sm transition-all group">
-                                <i data-lucide="user-search" class="w-5 h-5 group-hover:text-elite-blue"></i><span>Qualificação & Diagnóstico</span>
-                                <i data-lucide="chevron-right" id="icon-qualificacao" class="ml-auto w-3.5 h-3.5 transition-transform"></i>
-                            </button>
-                            <div id="sub-qualificacao" class="hidden mt-1 space-y-1 border-l border-white/10 ml-6 pl-2">
-                                <button onclick="navigateTo('qualificacao-diagnostico')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="qualificacao-diagnostico">Audit. Diagnóstica</button>
-                                <button onclick="navigateTo('qualificacao-spin')" class="w-full text-left py-1 text-slate-500 hover:text-elite-blue text-xs submenu-item" data-tab="qualificacao-spin">Método SPIN Elite</button>
-                            </div>
-                        </div>
-
-                        <button onclick="navigateTo('ganchos')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-slate-400 hover:bg-white/5 hover:text-white" data-tab="ganchos">
-                            <i data-lucide="target" class="w-5 h-5"></i><span>Ganchos de Fechamento</span>
-                        </button>
-
-                        <button onclick="navigateTo('followup')" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-slate-400 hover:bg-white/5 hover:text-white" data-tab="followup">
-                            <i data-lucide="refresh-cw" class="w-5 h-5"></i><span>Régua de Follow-up</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Rodapé -->
-                <div class="p-6 border-t border-white/5 bg-black">
-                    <div class="flex items-center gap-3 text-slate-500">
-                        <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-                        <span class="text-[10px] font-black uppercase tracking-widest italic leading-none text-blue-400">Elite Performance 2026</span>
+    <main class="flex-1 bg-slate-50 h-full overflow-y-auto relative">
+        <!-- Header -->
+        <header class="bg-white border-b border-slate-200 px-8 py-4 sticky top-0 z-10 flex justify-between items-center shadow-sm">
+            <div>
+                <h2 id="current-module-title" class="text-2xl font-bold text-slate-800">Bem-vindo ao Be.Smart</h2>
+                <p id="current-module-desc" class="text-sm text-slate-500 mt-1">Selecione uma etapa no menu lateral para começar.</p>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-4">
+                <div class="text-right">
+                    <p class="text-xs text-slate-500 font-medium">Progresso da Qualificação</p>
+                    <div class="w-32 h-2 bg-slate-200 rounded-full mt-1">
+                        <div id="progress-bar" class="h-full bg-primary-500 rounded-full transition-all duration-500" style="width: 0%"></div>
                     </div>
                 </div>
             </div>
-        </aside>
+        </header>
 
-        <!-- Área de Conteúdo -->
-        <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
-            <header class="h-20 bg-white border-b border-slate-100 flex items-center justify-between px-8 shrink-0 z-10 shadow-sm">
-                <button id="mobile-toggle" class="p-2 lg:hidden bg-slate-100 rounded-lg text-elite-blue"><i data-lucide="menu"></i></button>
-                <div class="flex items-center gap-4 ml-auto">
-                    <button onclick="navigateTo('dashboard')" class="text-xs font-black text-elite-blue uppercase tracking-widest flex items-center gap-2 hover:opacity-80 transition-opacity">
-                         <i data-lucide="home" class="w-4 h-4"></i> Início
-                    </button>
+        <!-- Content Area -->
+        <div id="content-area" class="p-8 max-w-4xl mx-auto pb-24">
+            <!-- Initial State -->
+            <div class="text-center py-20 fade-in">
+                <div class="w-20 h-20 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-10 h-10 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                 </div>
-            </header>
-
-            <main id="content-area" class="flex-1 overflow-y-auto p-6 lg:p-10 bg-[#FBFBFF] custom-scrollbar"></main>
+                <h2 class="text-3xl font-bold text-slate-800 mb-4">Especialista em Vendas Consultivas</h2>
+                <p class="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">Este playbook foi desenhado para guiá-colocar em uma conversa estruturada. Descubra necessidades, qualifique com precisão e feche mais negócios aplicando neurovendas.</p>
+                <button onclick="loadModule(1)" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
+                    Iniciar 1ª Etapa de Atendimento
+                </button>
+            </div>
         </div>
-    </div>
-
-    <!-- Notificação -->
-    <div id="notif" class="fixed bottom-10 left-1/2 -translate-x-1/2 translate-y-32 transition-transform duration-500 bg-[#050505] text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-4 z-[100] border border-white/10">
-        <div class="w-8 h-8 bg-elite-blue rounded-full flex items-center justify-center">
-            <i data-lucide="check" class="w-5 h-5"></i>
-        </div>
-        <span class="font-bold text-sm">Informação pronta para o WhatsApp!</span>
-    </div>
+    </main>
 
     <script>
-        const carenciaGeral = "• Urgência/emergência: 24 horas\n• Consultas e exames simples: 30 dias\n• Internações e exames complexos: 180 dias\n• Parto: 300 dias\n• Doenças e Lesões Pré-existentes (CPT): 24 meses.";
-        
-        const technicalData = {
-            atendimento: {
-                title: "Segmentação Assistencial",
-                ambulatorial: "🏥 PLANO AMBULATORIAL:\nFocado em atendimentos sem internação.",
-                hospitalar: "🏨 PLANO HOSPITALAR:\nFocado exclusivamente em internações.",
-                sob: "⚖️ SEM OBSTETRÍCIA:\nAmbulatorial + Hospitalar sem parto.",
-                cob: "🤰 COM OBSTETRÍCIA:\nA cobertura mais comum e equilibrada do mercado.",
-                completo: "🌟 PLANO COMPLETO (REFERÊNCIA):\nO padrão máximo exigido pela Lei 9.656/98."
-            },
-            acomodacao: {
-                title: "Acomodação",
-                enfermaria: "👥 ENFERMARIA (COLETIVO):\nQuarto compartilhado com banheiro também compartilhado.",
-                apartamento: "🏠 APARTAMENTO (PRIVATIVO):\nQuarto e banheiro individuais. Liberdade total para acompanhante 24h.",
-                diferencas: "📊 QUADRO COMPARATIVO:\n📍 ENFERMARIA: Coletivo / Econômico\n📍 APARTAMENTO: Privativo / Conforto"
-            },
-            copart: {
-                title: "Coparticipação",
-                total: "🔵 COPARTICIPAÇÃO TOTAL:\nMensalidade mínima. O cliente paga uma taxa em cada uso.",
-                parcial: "⚖️ COPARTICIPAÇÃO PARCIAL:\nTaxas apenas em itens específicos. Consultas básicas isentas.",
-                sem: "⚪ SEM COPARTICIPAÇÃO:\nMensalidade fixa. Uso livre sem taxas extras."
-            },
-            pme: {
-                title: "Plano Empresarial (PME)",
-                contratacao: "• Necessário CNPJ ativo (MEI 180 dias);\n• Mínimo de 2 ou 3 vidas;\n• Aceita Sócios, CLT, Estagiários e Dependentes.",
-                vigencia: "• Análise: 5 a 30 dias.\n• Ativo após a primeira quitação.",
-                carencia: carenciaGeral + "\n🔥 ISENÇÃO TOTAL: Para grupos acima de 30 vidas.",
-                documentacao: "🏢 EMPRESA / TITULAR:\n- CONTRATO SOCIAL\n- CNPJ\n- RG E CPF OU CNH DO TITULAR DO CNPJ\n- E-MAIL\n- TELEFONE\n\n👨‍👩‍👧‍👦 DEPENDENTES:\n- CERTIDÃO DE NASCIMENTO (SE FOR MENOR DE 18 ANOS)\n- RG E CPF OU CNH\n- VÍNCULO COM O TITULAR (CERTIDÃO DE CASAMENTO OU UNIÃO ESTÁVEL)\n\n👷 FUNCIONÁRIO:\n- RG E CPF OU CNH\n- COMPROVANTE DE VÍNCULO COM A EMPRESA (FGTS, E-SOCIAL, CARTEIRA DE TRABALHO)\n- E-MAIL\n- TELEFONE\n\n👨‍👩‍👧‍👦 DEPENDENTES DO FUNCIONÁRIO:\n- CERTIDÃO DE NASCIMENTO (SE FOR MENOR DE 18 ANOS)\n- RG E CPF OU CNH\n- VÍNCULO COM O TITULAR (CERTIDÃO DE CASAMENTO OU UNIÃO ESTÁVEL)\n\n⚠️ OBSERVAÇÃO:\nSe houver plano anterior, solicitar a Carta de Permanência.",
-                reajuste: "• No aniversário do contrato (cada 12 meses).\n• Baseado em Sinistralidade (Uso x Prêmio).",
-                cancelamento: "• Fidelidade comum: 12 ou 24 meses.\n• Aviso prévio de 60 dias (RN 412).",
-                preco: "• Custo agressivo comparado ao Individual."
-            },
-            adesao: {
-                title: "Plano por Adesão",
-                contratacao: "• Destinado a profissionais de entidades de classe.",
-                vigencia: "• Datas fixas (Todo dia 01, 10 ou 20).\n• Taxa de Angariação na assinatura.",
-                carencia: carenciaGeral,
-                documentacao: "- RG e CPF ou CNH;\n- Selfie segurando um documento com foto;\n- Comprovante de Residência;\n- Comprovante de Vinculo à Entidade Associativa;\n- E-mail;\n- Telefone;\n- Carta de Permanência (Se houver plano anterior).\n\n👨‍👩‍👧‍👦 EM CASO DE DEPENDENTE:\n- RG e CPF ou CNH;\n- Comprovante de Vínculo com o Titular.\n\n⚠️ OBSERVAÇÃO:\nSe houver plano anterior, solicitar a Carta de Permanência.",
-                reajuste: "• No aniversário da apólice coletiva da administradora.",
-                cancelamento: "• Pode ser cancelado a qualquer momento.",
-                preco: "• Custo intermediário."
-            },
-            individual: {
-                title: "Plano Individual (PF)",
-                contratacao: "• Contratação direta via CPF.",
-                vigencia: "• Início imediato pós-pagamento.",
-                carencia: carenciaGeral,
-                documentacao: "- RG e CPF ou CNH;\n- Selfie segurando um documento com foto;\n- Comprovante de Residência;\n- E-mail;\n- Telefone;\n- Carta de Permanência (Se houver plano anterior).\n\n👨‍👩‍👧‍👦 EM CASO DE DEPENDENTE:\n- RG e CPF ou CNH;\n- Comprovante de Vínculo com o Titular;\n- Carta de Permanência (Se houver plano anterior).\n\n⚠️ OBSERVAÇÃO:\nSe houver plano anterior, solicitar a Carta de Permanência.",
-                reajuste: "• Anual regulado pelo teto da ANS.",
-                cancelamento: "• Pode ser cancelado a qualquer momento.",
-                preco: "• Maior estabilidade jurídica."
-            },
-            pj99: {
-                title: "Plano PJ (+99 vidas)",
-                contratacao: "• Grandes empresas (+100 vidas);\n• Pode ser formatado como Pré ou Pós-Pagamento.",
-                vigencia: "• Datas negociadas diretamente.",
-                carencia: "🔥 ISENÇÃO TOTAL de carências e CPT conforme RN 195 da ANS.",
-                documentacao: "🏢 EMPRESA / TITULAR:\n- CONTRATO SOCIAL\n- CNPJ\n- RG E CPF OU CNH DO TITULAR DO CNPJ\n- E-MAIL\n- TELEFONE\n\n👨‍👩‍👧‍👦 DEPENDENTES:\n- CERTIDÃO DE NASCIMENTO (SE FOR MENOR DE 18 ANOS)\n- RG E CPF OU CNH\n- VÍNCULO COM O TITULAR (CERTIDÃO DE CASAMENTO OU UNIÃO ESTÁVEL)\n\n👷 FUNCIONÁRIO:\n- RG E CPF OU CNH\n- COMPROVANTE DE VÍNCULO COM A EMPRESA (FGTS, E-SOCIAL, CARTEIRA DE TRABALHO)\n- E-MAIL\n- TELEFONE\n\n👨‍👩‍👧‍👦 DEPENDENTES DO FUNCIONÁRIO:\n- CERTIDÃO DE NASCIMENTO (SE FOR MENOR DE 18 ANOS)\n- RG E CPF OU CNH\n- VÍNCULO COM O TITULAR (CERTIDÃO DE CASAMENTO OU UNIÃO ESTÁVEL)\n\n📊 ANÁLISE TÉCNICA E RISCO:\n- RELATÓRIO DE SINISTRALIDADE DOS ÚLTIMOS 12 MESES\n- DATA DA RENOVAÇÃO\n- RELATÓRIO ANALÍTICO\n- RELAÇÃO DE VIDAS COMPLETA (EXCEL)\n- PERFIL DE UTILIZAÇÃO - Alto uso ou baixo uso? Existência de: Internações recorrentes, Doenças crônicas (sem detalhar dados sensíveis individuais) e Gestante.",
-                reajuste: "• Reajuste Técnico (Loss Ratio) negociado diretamente.",
-                cancelamento: "• Regido pelo contrato máster.",
-                preco: "• Estudo técnico (Capital Global)."
-            }
+        // --- DATA STORE ---
+        let clientData = {
+            nomeCliente: '',
+            nomeAssessor: '',
+            motivoBusca: null,
+            elegibilidade: null,
+            tipoPlano: null,
+            tamanhoFamilia: 0,
+            idades: [],
+            dependentes: [],
+            empresaVidas: 0,
+            empresaCNPJ: '',
+            empresaSegmento: null,
+            empresaDetalhesVinculo: '',
+            estado: '',
+            cidade: '',
+            bairro: '',
+            viagens: null,
+            planoAnterior: null,
+            perfilUso: null,
+            redeImportante: [],
+            configDesejada: null,
+            dataReuniao: '',
+            horaReuniao: ''
         };
 
-        const otherData = {
-            dashboard: { 
-                render: () => `<div class="fade-in space-y-8 text-left">
-                    <div class="premium-gradient p-12 rounded-[3.5rem] text-white shadow-2xl relative overflow-hidden border-b-4 border-blue-600">
-                        <div class="relative z-10 max-w-2xl">
-                            <h1 class="text-6xl font-black italic tracking-tighter uppercase leading-[0.9]">Corretores de Elite<span class="text-blue-500">.</span></h1>
-                            <p class="text-blue-100 text-xl font-medium mt-6 italic">A estrutura técnica completa para o Corretor de Alta Performance.</p>
-                        </div>
-                        <i data-lucide="shield-check" class="absolute right-[-40px] bottom-[-40px] w-96 h-96 opacity-10 -rotate-12"></i>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div onclick="navigateTo('pme-contratacao')" class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm hover:border-blue-500 cursor-pointer transition-all hover:shadow-xl group">
-                            <i data-lucide="building-2" class="text-blue-600 mb-4 group-hover:scale-110"></i>
-                            <h3 class="font-black uppercase italic text-sm">Empresarial PME</h3>
-                        </div>
-                        <div onclick="navigateTo('pj99-contratacao')" class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm hover:border-blue-500 cursor-pointer transition-all hover:shadow-xl group">
-                            <i data-lucide="building" class="text-blue-600 mb-4 group-hover:scale-110"></i>
-                            <h3 class="font-black uppercase italic text-sm">PJ (+99 vidas)</h3>
-                        </div>
-                        <div onclick="navigateTo('ganchos')" class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm hover:border-blue-500 cursor-pointer transition-all hover:shadow-xl group">
-                            <i data-lucide="target" class="text-blue-600 mb-4 group-hover:scale-110"></i>
-                            <h3 class="font-black uppercase italic text-sm">Ganchos Elite</h3>
-                        </div>
-                        <div onclick="navigateTo('qualificacao-diagnostico')" class="p-8 bg-white border border-slate-100 rounded-3xl shadow-sm hover:border-blue-500 cursor-pointer transition-all hover:shadow-xl group">
-                            <i data-lucide="user-search" class="text-blue-600 mb-4 group-hover:scale-110"></i>
-                            <h3 class="font-black uppercase italic text-sm">Qualificação</h3>
-                        </div>
-                    </div>
-                </div>` 
-            },
-            ganchos: { 
-                render: () => {
-                    const hookGroups = [
-                        { icon: '🛡️', title: 'GANCHO DE AUTORIDADE', subtitle: 'POSICIONAMENTO DE ESPECIALISTA', objective: 'REDUZIR RESISTÊNCIA', questions: ["Me diz uma coisa: hoje você sente que tem um seguro ou uma parceria real de saúde? Porque a maioria dos planos foca em burocracia, eu foco em proteção financeira.", "Você sabia que 70% das pessoas pagam por coberturas que nunca vão usar? Posso fazer uma auditoria rápida no seu perfil?", "Para eu te indicar o plano correto, preciso saber: você prioriza rede de hospitais premium ou o melhor custo-benefício por procedimento?"] },
-                        { icon: '💎', title: 'GANCHO DE LÓGICA FINANCEIRA', subtitle: 'PARA QUEM JÁ TEM PLANO', objective: 'PROVAR ECONOMIA', questions: ["Se eu te mostrar que você está deixando dinheiro na mesa todo mês com o reajuste atual do seu plano, faz sentido conversarmos?", "Hoje o seu plano é um investmento ou um custo fixo que só sobe? Tenho uma estratégia para transformar isso em economia real.", "Você já ouviu falar em portabilidade inteligente? É como trocar de banco mantendo seus benefícios, mas pagando menos."] },
-                        { icon: '⚠️', title: 'GANCHO DE URGÊNCIA REAL', subtitle: 'ACELERAÇÃO DE DECISÃO', objective: 'EVITAR PROCRASTINAÇÃO', questions: ["Te chamei porque as tabelas de [Mês/Ano] estão para fechar. Quem assinar agora garante a carência reduzida que não existirá no próximo ciclo.", "Acabou de sair uma normativa que pode alterar a entrada de novos dependentes. Quer garantir sua posição antes dessa mudança?", "A cada dia que você adia, é um dia a mais de risco sem cobertura total. Vamos resolver essa pendência hoje?"] },
-                        { icon: '👨‍👩‍👧', title: 'GANCHO EMOCIONAL/FAMÍLIA', subtitle: 'PONTO DE DOR PROFUNDO', objective: 'GERAR RESPONSABILIDADE', questions: ["Se algo acontecer amanhã, você prefere ter um cartão de plano de saúde no bolso ou a incerteza de uma fila de espera?", "Sua família é seu maior patrimônio. O plano de saúde não é para doenças, é para garantir que o seu patrimônio não seja consumido por uma emergência hospitalar.", "Qual é o valor da sua tranquilidade ao saber que seus filhos têm acesso imediato aos melhores pediatras da região?"] }
-                    ];
+        const modules = [
+            { id: 1, title: "1. Iniciar Atendimento", desc: "Criar rapport e gerar confiança inicial", question: "Oi [Nome], tudo bem? Aqui é o [Seu Nome] da Be.Smart. Você tem 2 minutinhos pra gente bater um papo rápido e eu entender como posso te ajudar melhor com o plano de saúde?" },
+            { id: 2, title: "2. Motivo da Busca", desc: "Descobrir as dores e motivadores reais", question: "Me conta uma coisa... o que te fez parar hoje pra procurar um plano? Aconteceu alguma coisa ou é mais por precaução mesmo?" },
+            { id: 3, title: "3. Investigação de Elegibilidade", desc: "Verificar possibilidade de desconto via CNPJ ou Profissão", question: "Só pra eu ver se consigo um desconto legal pra você: você tem algum CNPJ (pode ser MEI) ou é formado em alguma faculdade/área técnica?" },
+            { id: 4, title: "4. Qualificação Familiar (PF/Adesão)", desc: "Entender a composição da família", question: "Pensando na proteção da casa, quem vai entrar no plano com você? Tem criança pequena, alguém mais velho...?" },
+            { id: 5, title: "5. Qualificação Empresarial (PJ)", desc: "Dados da empresa e colaboradores", question: "Falando da empresa, esse plano é mais pra você e pros sócios ou você tá pensando em oferecer como benefício pra equipe?" },
+            { id: 6, title: "6. Localização e Abrangência", desc: "Definir região de uso e necessidade de viagens", question: "Deixa eu te perguntar, em qual cidade e bairro vocês ficam mais? E vocês costumam viajar muito ou a rotina é mais por aí mesmo?" },
+            { id: 7, title: "7. Histórico do Plano", desc: "Entender o referencial do cliente", question: "Você já tem algum plano hoje ou teve algum recentemente? Só pra eu ter uma ideia do que você já tá acostumado a usar." },
+            { id: 8, title: "8. Perfil de Utilização", desc: "Frequência e histórico de uso médico", question: "Como é a rotina de saúde de vocês? Costumam ir bastante ao médico, fazer exames direto, ou é mais aquela ida uma vez no ano pra check-up?" },
+            { id: 9, title: "9. Hospitais e Médicos", desc: "Rede credenciada de preferência", question: "Tem algum hospital, laboratório ou médico que você não abre mão de jeito nenhum? Ou alguma operadora que você já goste?" },
+            { id: 10, title: "10. Configuração Desejada", desc: "Definir Acomodação e Coparticipação", question: "Pensando no bolso e no conforto: você prefere um plano mais em conta onde você paga uma taxinha só quando usa, ou prefere pagar um valor fixo pra não ter surpresa? E quarto de hospital: faz questão de ser individual?" },
+            { id: 11, title: "11. Agendamento e Encerramento", desc: "Marcar a reunião de proposta e finalizar", question: "Perfeito, [Nome]. Já tenho tudo o que preciso. Para eu te apresentar as opções de forma clara, qual o melhor dia e horário para fazermos uma nova reunião rápida de 15 minutos?" },
+            { id: 12, title: "12. Resumo e Recomendação", desc: "Diagnóstico comercial final", question: "Faz sentido seguirmos com esta opção para garantir sua proteção?" }
+        ];
 
-                    return `<div class="fade-in space-y-10">
-                        <div class="premium-gradient p-12 rounded-[2.5rem] text-white shadow-xl relative overflow-hidden -mx-2 lg:-mx-4 -mt-4 mb-8">
-                            <div class="relative z-10">
-                                <h2 class="text-6xl font-black italic uppercase tracking-tighter leading-none mb-4">Ganchos de Fechamento</h2>
-                                <p class="text-blue-100 font-bold uppercase tracking-widest text-lg">Scripts de alto impacto para Corretores Elite</p>
-                            </div>
-                            <div class="absolute right-[-20px] top-1/2 -translate-y-1/2 opacity-20">
-                                <i data-lucide="zap" class="w-64 h-64"></i>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-12">
-                            ${hookGroups.map(group => `
-                                <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-col space-y-6 hover:shadow-xl transition-all">
-                                    <div>
-                                        <div class="flex items-center gap-2 mb-1">
-                                            <span class="text-2xl">${group.icon}</span>
-                                            <h3 class="font-black text-xl italic uppercase tracking-tighter text-blue-600 leading-none">${group.title}</h3>
-                                        </div>
-                                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">${group.subtitle}</p>
-                                    </div>
-                                    <div class="space-y-3 flex-1">
-                                        ${group.questions.map(q => `
-                                            <div class="group relative">
-                                                <div class="bg-slate-50 p-5 pr-12 rounded-2xl text-slate-600 font-semibold text-sm italic border border-transparent hover:border-blue-200 hover:bg-white cursor-pointer transition-all" onclick="handleCopy('${q.replace(/'/g, "\\'")}')">
-                                                    "${q}"
-                                                    <div class="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100"><i data-lucide="copy" class="w-4 h-4 text-blue-400"></i></div>
-                                                </div>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                    <div class="pt-4 mt-auto">
-                                        <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 rounded-full text-blue-600">
-                                            <i data-lucide="target" class="w-3.5 h-3.5"></i>
-                                            <span class="text-[9px] font-black uppercase tracking-widest">OBJETIVO: ${group.objective}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>`;
-                }
-            },
-            followup: { 
-                render: () => {
-                    const stages = [
-                        { d: 'D+0', t: 'ENTREGA DE VALOR', m: "Fala [Nome]! Acabei de te enviar a proposta. Note que selecionei a opção [X] especificamente pelo hospital [Y], que você mencionou ser importante. Dá uma olhada e me diz se a rede de atendimento ficou como você esperava.", obj: "VALIDAR REDE" },
-                        { d: 'D+1', t: 'OUVINTE ATIVO', m: "Oi [Nome], conseguiu ler? Alguma dúvida técnica sobre as carências ou sobre a coparticipação? Se preferir, me diz um horário e eu te explico em 2 minutos por áudio.", obj: "TIRAR DÚVIDAS" },
-                        { d: 'D+3', t: 'QUEBRA DE SILÊNCIO', m: "[Nome], notei que você ainda não avançou. Geralmente, quando o cliente para aqui, é por causa do preço ou da rede de hospitais. Qual desses dois pontos está pesando mais aí para gente ajustar?", obj: "ISOLAR OBJEÇÃO" },
-                        { d: 'D+5', t: 'ESCASSEZ ELITE', m: "[Nome], te chamei para avisar que a condição de carência reduzida que conversamos expira em 48h. Depois disso, o sistema vira para a regra padrão. Conseguimos assinar digitalmente hoje para garantir seu benefício?", obj: "GERAR SENSO DE PERDA" },
-                        { d: 'D+7', t: 'DESPEDIDA PROFISSIONAL', m: "[Nome], entendo que agora talvez não seja o momento ideal para você. Vou retirar sua proposta do sistema para manter nossa fila organizada. Se precisar no futuro, sigo à disposição. Grande abraço!", obj: "GATILHO DO DESAPEGO" }
-                    ];
-                    return `<div class="fade-in space-y-10">
-                        <div class="premium-gradient p-10 rounded-b-[3rem] text-white shadow-2xl relative overflow-hidden -mx-6 lg:-mx-10 -mt-10 mb-10 border-b-4 border-blue-500">
-                            <h2 class="text-5xl font-black italic uppercase tracking-tighter mb-2">Régua de Follow-up</h2>
-                            <p class="text-blue-400 font-bold uppercase tracking-[0.3em] text-xs italic">Onde 80% dos fechamentos acontecem</p>
-                        </div>
-                        <div class="space-y-6 pb-12">
-                            ${stages.map(s => `
-                                <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-col lg:flex-row gap-8 transition-all hover:shadow-lg">
-                                    <div class="lg:w-48 shrink-0 flex flex-col justify-center">
-                                        <span class="text-xs font-black text-blue-600 mb-1">${s.d}</span>
-                                        <h3 class="font-black text-xl text-slate-800 uppercase italic leading-none">${s.t}</h3>
-                                    </div>
-                                    <div class="flex-1 space-y-4">
-                                        <div class="bg-slate-50 p-6 rounded-3xl text-slate-700 font-semibold italic text-base cursor-pointer hover:bg-blue-50 transition-all border border-transparent hover:border-blue-100" onclick="handleCopy('${s.m}')">
-                                            "${s.m}"
-                                        </div>
-                                        <div class="flex items-center gap-2 text-slate-400">
-                                            <i data-lucide="crosshair" class="w-3.5 h-3.5"></i>
-                                            <span class="text-[10px] font-bold uppercase tracking-widest">OBJETIVO: ${s.obj}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>`;
-                }
-            },
-            'qualificacao-spin': {
-                render: () => {
-                    const spinData = [
-                        { id: 'S', title: 'SITUAÇÃO', questions: ["Hoje você possui plano ou está buscando agora?", "Quem mais participará desse benefício com você?", "Qual o valor médio que você investe hoje mensalmente?"], color: 'bg-slate-900' },
-                        { id: 'P', title: 'PROBLEMA', questions: ["O que te incomoda no seu atendimento atual?", "Já teve algum procedimento negado ou demora excessiva para consultas?", "Quanto esse problema impacta sua rotina hoje?"], color: 'bg-blue-700' },
-                        { id: 'I', title: 'IMPLICAÇÃO', questions: ["Se essa situação continuar, qual o risco financeiro para sua família?", "E se você precisar de uma emergência hospitalar agora e não tiver a cobertura adequada?", "Quanto você está perdendo em produtividade por não ter rede credenciada próxima?"], color: 'bg-blue-900' },
-                        { id: 'N', title: 'NECESSIDADE', questions: ["Se eu te mostrar uma opção que reduza seu custo e aumente sua rede, você fecharia hoje?", "O quão importante seria ter a tranquilidade de um atendimento premium para seus filhos?", "Faz sentido resolvermos isso agora para você focar no que realmente importa?"], color: 'bg-blue-500' }
-                    ];
-                    return `<div class="fade-in space-y-8">
-                        <div class="premium-gradient p-10 rounded-b-[3rem] text-white shadow-2xl relative overflow-hidden -mx-6 lg:-mx-10 -mt-10 mb-10 border-b-4 border-blue-400">
-                            <h2 class="text-5xl font-black italic uppercase tracking-tighter mb-2">Método SPIN Elite</h2>
-                            <p class="text-blue-400 font-bold uppercase tracking-[0.3em] text-xs">Condução estratégica para o sim</p>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-10">
-                            ${spinData.map(item => `
-                                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all">
-                                    <div class="flex items-center gap-5 mb-6">
-                                        <div class="w-16 h-16 ${item.color} rounded-2xl flex items-center justify-center text-white text-3xl font-black shadow-lg">${item.id}</div>
-                                        <div>
-                                            <h3 class="font-black text-xl italic uppercase tracking-tighter text-slate-800 leading-none">${item.title}</h3>
-                                        </div>
-                                    </div>
-                                    <div class="space-y-3">
-                                        ${item.questions.map(q => `
-                                            <div class="bg-slate-50 p-4 rounded-2xl text-sm font-semibold italic text-slate-600 cursor-pointer hover:bg-blue-50 transition-all" onclick="handleCopy('${q}')">"${q}"</div>
-                                        `).join('')}
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>`;
-                }
-            },
-            'qualificacao-diagnostico': {
-                render: () => {
-                    const checklist = [
-                        { q: "Quem será o beneficiário principal?", desc: "Identificar o tomador de decisão." },
-                        { q: "Qual a faixa etária de todos?", desc: "Cálculo técnico imediato." },
-                        { q: "Atualmente possui plano de saúde?", desc: "Ponto de partida para portabilidade." },
-                        { q: "Faz questão de algum hospital ou clínica específica?", desc: "Filtro de rede credenciada." },
-                        { q: "Possui CNPJ ativo (MEI, LTDA, EIRELI)?", desc: "Enquadramento tributário/PME." },
-                        { q: "Vínculo com entidade ou conselho (OAB, CRM)?", desc: "Enquadramento Adesão." },
-                        { q: "Existe alguma cirurgia ou exame complexo previsto?", desc: "Análise de carência e CPT." },
-                        { q: "Já recebeu outra proposta? O que não gostou nela?", desc: "Identificar a concorrência e objeções prévias." }
-                    ];
-                    return `<div class="fade-in space-y-6">
-                        <div class="bg-blue-700 p-10 rounded-3xl text-white shadow-xl flex items-center gap-8 -mx-2">
-                             <div class="p-5 bg-white/10 rounded-3xl"><i data-lucide="clipboard-check" class="w-10 h-10"></i></div>
-                             <div>
-                                <h2 class="text-4xl font-black uppercase italic tracking-tighter leading-none">Auditoria Diagnóstica</h2>
-                                <p class="text-blue-100 text-xs font-bold uppercase tracking-widest mt-2">Diagnóstico de Alta Performance Be Smart</p>
-                             </div>
-                        </div>
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-12">
-                            ${checklist.map((item, i) => `
-                                <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex items-start justify-between group hover:border-blue-400 transition-all">
-                                    <div class="flex items-start gap-4">
-                                        <span class="w-8 h-8 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center font-black text-sm shrink-0">${i + 1}</span>
-                                        <div>
-                                            <p class="text-slate-800 font-bold text-base leading-tight">${item.q}</p>
-                                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">${item.desc}</p>
-                                        </div>
-                                    </div>
-                                    <button onclick="handleCopy('${item.q}')" class="p-2 text-slate-300 hover:text-blue-600 transition-all"><i data-lucide="copy" class="w-4 h-4"></i></button>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>`;
-                }
-            }
-        };
-
-        function toggleSubmenu(id) {
-            const sub = document.getElementById(`sub-${id}`);
-            const icon = document.getElementById(`icon-${id}`);
-            const isHidden = sub.classList.toggle('hidden');
-            icon.style.transform = isHidden ? 'rotate(0deg)' : 'rotate(90deg)';
-        }
-
-        function handleManualCopy(mod, section) {
-            let text = section ? technicalData[mod][section] : otherData[mod].content;
-            handleCopy(text);
-        }
-
-        function navigateTo(id) {
-            const area = document.getElementById('content-area');
-            let contentHtml = '';
-            document.querySelectorAll('.nav-item, .submenu-item').forEach(el => el.classList.toggle('sidebar-item-active', el.getAttribute('data-tab') === id));
+        // --- RENDER MENU ---
+        function renderMenu() {
+            const menu = document.getElementById('main-menu');
+            menu.innerHTML = '';
             
-            if (id.includes('-')) {
-                const parts = id.split('-');
-                const mod = parts[0], section = parts[1];
-                if (otherData[id]) {
-                    const item = otherData[id];
-                    contentHtml = item.render ? item.render() : createGenericView(item.title, item.content, id);
-                } else if (technicalData[mod] && technicalData[mod][section]) {
-                    const item = technicalData[mod];
-                    const titles = { contratacao: "Contratação", vigencia: "Vigência", carencia: "Carência", documentacao: "Documentação", reajuste: "Reajuste", cancelamento: "Cancelamento", preco: "Análise", total: "Coparticipação Total", parcial: "Coparticipação Parcial", sem: "Sem Coparticipação", ambulatorial: "Ambulatorial", hospitalar: "Hospitalar", sob: "Sem Obstetrícia", cob: "Com Obstetrícia", completo: "Plano Completo", enfermaria: "Enfermaria", apartamento: "Apartamento", diferencas: "Comparativo" };
-                    contentHtml = createGenericView(titles[section] || section, item[section], mod, section);
-                }
-            } else {
-                const item = otherData[id];
-                contentHtml = item.render ? item.render() : createGenericView(item.title, item.content, id);
-            }
-            area.innerHTML = contentHtml;
-            lucide.createIcons();
-            if (window.innerWidth < 1024) document.getElementById('sidebar').classList.add('-translate-x-full');
-            area.scrollTo(0, 0);
+            modules.forEach(mod => {
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left px-3 py-2.5 rounded-lg mb-1 transition-colors text-sm flex flex-col group 
+                    ${currentModuleId === mod.id ? 'bg-primary-600 text-white shadow-md' : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'}`;
+                
+                btn.innerHTML = `
+                    <div class="flex justify-between items-center w-full mb-1">
+                        <span class="truncate pr-2 font-medium">${mod.title}</span>
+                        <svg class="w-4 h-4 shrink-0 opacity-0 group-hover:opacity-100 ${currentModuleId === mod.id ? 'opacity-100 text-white' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </div>
+                `;
+                btn.onclick = () => loadModule(mod.id);
+                menu.appendChild(btn);
+            });
+
+            // Update Progress Bar
+            const progress = (Object.keys(clientData).filter(k => {
+                if (Array.isArray(clientData[k])) return clientData[k].length > 0;
+                return clientData[k] !== null && clientData[k] !== 0 && clientData[k] !== '';
+            }).length / 12) * 100;
+            
+            document.getElementById('progress-bar').style.width = `${Math.min(progress, 100)}%`;
         }
 
-        function createGenericView(title, content, mod, section = null) {
-            return `<div class="fade-in max-w-4xl mx-auto space-y-8 text-left">
-                <div class="bg-white rounded-[3rem] shadow-xl border overflow-hidden border-slate-100">
-                    <div class="p-10 bg-[#050505] text-white border-b-4 border-blue-600">
-                        <h2 class="text-4xl font-black italic uppercase tracking-tighter">${title}</h2>
+        let currentModuleId = 0;
+
+        function atualizarNomes() {
+            const clienteInput = document.getElementById('input-nome-cliente');
+            const assessorInput = document.getElementById('input-nome-assessor');
+            
+            if(clienteInput && assessorInput) {
+                clientData.nomeCliente = clienteInput.value;
+                clientData.nomeAssessor = assessorInput.value;
+                
+                const spanClientes = document.querySelectorAll('.dyn-nome-cliente');
+                const spanAssessores = document.querySelectorAll('.dyn-nome-assessor');
+                
+                const nomeC = clientData.nomeCliente.trim() !== '' ? clientData.nomeCliente : '[Nome]';
+                const nomeA = clientData.nomeAssessor.trim() !== '' ? clientData.nomeAssessor : '[Seu Nome]';
+                
+                spanClientes.forEach(el => el.innerText = nomeC);
+                spanAssessores.forEach(el => el.innerText = nomeA);
+            }
+        }
+
+        // --- STREAMING_CHUNK:Lógica principal de carregamento de módulos... ---
+        function loadModule(id) {
+            currentModuleId = id;
+            const moduleInfo = modules.find(m => m.id === id);
+            
+            document.getElementById('current-module-title').innerText = moduleInfo.title;
+            // Descrição limpa no cabeçalho (sem a pergunta aqui, ela vai pro corpo)
+            document.getElementById('current-module-desc').innerHTML = moduleInfo.desc;
+            
+            renderMenu();
+            
+            const contentArea = document.getElementById('content-area');
+            contentArea.innerHTML = ''; 
+            
+            const wrapper = document.createElement('div');
+            wrapper.className = 'fade-in space-y-6';
+
+            switch(id) {
+                case 1: renderModule1(wrapper); setTimeout(atualizarNomes, 50); break;
+                case 2: renderModule2(wrapper); break;
+                case 3: renderModule3(wrapper); break;
+                case 4: renderModule4(wrapper); break;
+                case 5: renderModule5(wrapper); break;
+                case 6: renderModule6(wrapper); break;
+                case 7: renderModule7(wrapper); break;
+                case 8: renderModule8(wrapper); break;
+                case 9: renderModule9(wrapper); break;
+                case 10: renderModule10(wrapper); break;
+                case 11: renderModule11(wrapper); break;
+                case 12: renderModule12(wrapper); break;
+                default: wrapper.innerHTML = '<p>Módulo em desenvolvimento.</p>';
+            }
+
+            contentArea.appendChild(wrapper);
+            document.querySelector('main').scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- HELPER COMPONENTS ---
+        function createSectionTitle(title, iconPath) {
+            return `
+                <div class="flex items-center gap-2 mb-4 border-b border-slate-200 pb-2">
+                    ${iconPath ? `<svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${iconPath}"></path></svg>` : ''}
+                    <h3 class="text-lg font-bold text-slate-800">${title}</h3>
+                </div>
+            `;
+        }
+
+        // Novo Componente: Balão de Conversa para as Perguntas Informais
+        function createChatBubble(text) {
+            return `
+                <div class="bg-primary-50 border-l-4 border-primary-500 p-5 rounded-r-xl mb-6 shadow-sm relative flex gap-4 items-start">
+                    <span class="text-3xl shrink-0 mt-1">💬</span>
+                    <div>
+                        <p class="text-primary-900 font-medium text-lg italic leading-relaxed">"${text}"</p>
+                        <p class="text-[10px] text-primary-600 mt-2 font-bold uppercase tracking-wider">Como perguntar ao cliente</p>
                     </div>
-                    <div class="p-10">
-                        <div class="bg-slate-50 p-8 rounded-3xl border border-dashed border-slate-200">
-                            <p class="whitespace-pre-line text-slate-700 text-lg font-medium leading-relaxed">${content}</p>
+                </div>
+            `;
+        }
+
+        function createInsightBox(title, content, type = 'info') {
+            const colors = {
+                info: 'bg-blue-50 border-blue-200 text-blue-800',
+                neuro: 'bg-fuchsia-50 border-fuchsia-200 text-fuchsia-800',
+                warning: 'bg-amber-50 border-amber-200 text-amber-800',
+                success: 'bg-green-50 border-green-200 text-green-800'
+            };
+            const icons = {
+                info: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+                neuro: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z',
+                warning: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z',
+                success: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
+            };
+
+            return `
+                <div class="border rounded-lg p-4 flex gap-3 ${colors[type]} module-card">
+                    <svg class="w-6 h-6 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${icons[type]}"></path></svg>
+                    <div>
+                        <h4 class="font-bold text-sm uppercase tracking-wide mb-1">${title}</h4>
+                        <p class="text-sm leading-relaxed">${content}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- STREAMING_CHUNK:Renderizando Módulo 1 (Atendimento)... ---
+        function renderModule1(wrapper) {
+            wrapper.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    ${createChatBubble(modules.find(m => m.id === 1).question)}
+                    
+                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200 mb-6 mt-4">
+                        <h4 class="font-bold text-slate-800 mb-3 border-b border-slate-200 pb-2">Identificação para o Atendimento</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Nome do Cliente</label>
+                                <input type="text" id="input-nome-cliente" placeholder="Ex: João da Silva" class="w-full p-3 border border-slate-300 bg-white rounded focus:ring-2 focus:ring-primary-500" oninput="atualizarNomes()" value="${clientData.nomeCliente || ''}">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Seu Nome (Assessor)</label>
+                                <input type="text" id="input-nome-assessor" placeholder="Ex: Maria Be.Smart" class="w-full p-3 border border-slate-300 bg-white rounded focus:ring-2 focus:ring-primary-500" oninput="atualizarNomes()" value="${clientData.nomeAssessor || ''}">
+                            </div>
                         </div>
-                        <button onclick="handleManualCopy('${mod}', ${section ? `'${section}'` : 'null'})" class="mt-8 flex items-center gap-3 px-10 py-4 bg-elite-blue text-white rounded-2xl font-black uppercase text-xs shadow-xl hover:scale-105 transition-all">
-                            <i data-lucide="copy" class="w-4 h-4"></i> Copiar Informação
+                    </div>
+
+                    ${createSectionTitle('Objetivo: Criar Rapport', 'M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z')}
+                    <p class="text-slate-600 mb-6">O primeiro contato define o tom da negociação. O objetivo não é vender o plano imediatamente, mas <strong>ganhar o direito de fazer perguntas</strong>.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="space-y-4">
+                            <h4 class="font-semibold text-slate-800 flex items-center gap-2">
+                                <span class="bg-green-100 text-green-600 p-1 rounded">✓</span> Como iniciar
+                            </h4>
+                            <ul class="text-sm space-y-2 text-slate-600">
+                                <li class="flex items-start gap-2"><span class="text-primary-500 font-bold">•</span> Quebre o gelo com tom de voz amigável e calmo.</li>
+                                <li class="flex items-start gap-2"><span class="text-primary-500 font-bold">•</span> Confirme se é um bom momento para falar (mostra respeito).</li>
+                                <li class="flex items-start gap-2"><span class="text-primary-500 font-bold">•</span> Use a técnica do "Especialista Consultivo" ao se apresentar.</li>
+                            </ul>
+                        </div>
+                        <div class="space-y-4">
+                            <h4 class="font-semibold text-slate-800 flex items-center gap-2">
+                                <span class="bg-red-100 text-red-600 p-1 rounded">✗</span> Erros a evitar
+                            </h4>
+                            <ul class="text-sm space-y-2 text-slate-600">
+                                <li class="flex items-start gap-2"><span class="text-red-400 font-bold">×</span> Perguntar "Quer comprar um plano?" ou "Qual seu orçamento?".</li>
+                                <li class="flex items-start gap-2"><span class="text-red-400 font-bold">×</span> Falar de preços ou enviar tabelas no primeiro "Oi".</li>
+                                <li class="flex items-start gap-2"><span class="text-red-400 font-bold">×</span> Falar como um robô lendo script.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    ${createInsightBox('Script 1: Abordagem Lead Novo', '<em>"Olá <span class="dyn-nome-cliente font-bold text-primary-700">[Nome]</span>, aqui é o <span class="dyn-nome-assessor font-bold text-primary-700">[Seu Nome]</span>, faço parte do Time Comercial da Be.Smart e vamos falar sobre planos de saúde. Vi que você busca informações sobre planos. Eu não estou aqui para te empurrar um plano genérico, mas sim para entender se consigo desenhar algo que faça sentido para [sua família / sua empresa]. Para encontrar o melhor plano de saúde que se enquadre no seu perfil, eu preciso de algumas informações, tudo bem?"</em>', 'info')}
+                    
+                    <div class="mt-4 mb-4">
+                        ${createInsightBox('Script 2: Cross-Sell (Cliente da Carteira de Investimentos)', '<em>"Olá <span class="dyn-nome-cliente font-bold text-primary-700">[Nome]</span>, aqui é o <span class="dyn-nome-assessor font-bold text-primary-700">[Seu Nome]</span> da Be.Smart. Nós já acompanhamos sua carteira e seu patrimônio financeiro. O motivo do meu contato hoje é para falar sobre a proteção do seu maior ativo: a sua saúde e da sua família. Estruturamos uma área de curadoria dedicada a Planos de Saúde. Como já temos uma relação de confiança, gostaria de 2 minutinhos para entender o seu cenário atual e avaliar se conseguimos otimizar sua proteção e reduzir custos, assim como fazemos com seus investimentos. Tudo bem?"</em>', 'success')}
+                    </div>
+
+                    ${createInsightBox('Neurovendas e a Quebra de Padrão', 'Ao dizer que "não quer empurrar" (Script 1) ou ao usar a <strong>autoridade e confiança</strong> já construídas nos investimentos (Script 2), você desativa o "escudo" de defesa do cérebro do cliente. O "tudo bem?" no final é essencial: ele devolve o controle da conversa ao cliente, gerando um micro-comprometimento e fazendo você ser visto como um conselheiro patrimonial aliado, não apenas um vendedor.', 'neuro')}
+
+                    <div class="mt-8 flex justify-end">
+                        <button onclick="loadModule(2)" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2">
+                            Avançar: Motivo da Busca
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </button>
                     </div>
                 </div>
-            </div>`;
+            `;
         }
 
-        function handleCopy(text) {
-            const el = document.createElement('textarea');
-            el.value = text;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            const notif = document.getElementById('notif');
-            notif.classList.remove('translate-y-32');
-            setTimeout(() => notif.classList.add('translate-y-32'), 2500);
+        // --- STREAMING_CHUNK:Renderizando Módulo 2 (Motivo da Busca Interativo)... ---
+        function renderModule2(wrapper) {
+            wrapper.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    ${createChatBubble(modules.find(m => m.id === 2).question)}
+                    
+                    ${createSectionTitle('Investigando o Motivador', 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z')}
+                    <p class="text-slate-600 mb-6">Ninguém acorda e pensa "Hoje vou comprar um plano de saúde". Sempre existe um <strong>fato gerador</strong> (dor, medo, novidade). Precisamos descobrir qual é.</p>
+                    
+                    <div class="mb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <button onclick="handleMotivo('insatisfacao')" class="text-left p-3 border border-slate-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-colors focus:ring-2 focus:ring-primary-500">
+                                <span class="font-bold text-slate-700 block mb-1">"Estou insatisfeito..."</span>
+                                <span class="text-xs text-slate-500">Com o plano atual (está caro, ruim ou teve muito reajuste).</span>
+                            </button>
+                            <button onclick="handleMotivo('seguranca')" class="text-left p-3 border border-slate-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-colors focus:ring-2 focus:ring-primary-500">
+                                <span class="font-bold text-slate-700 block mb-1">"Tomei um susto / Não tenho..."</span>
+                                <span class="text-xs text-slate-500">Alguém ficou doente ou sentiu medo de ficar desamparado.</span>
+                            </button>
+                            <button onclick="handleMotivo('gestacao')" class="text-left p-3 border border-slate-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-colors focus:ring-2 focus:ring-primary-500">
+                                <span class="font-bold text-slate-700 block mb-1">"Vem bebê por aí..."</span>
+                                <span class="text-xs text-slate-500">Esposa grávida ou estão planejando engravidar logo.</span>
+                            </button>
+                            <button onclick="handleMotivo('empresarial')" class="text-left p-3 border border-slate-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-colors focus:ring-2 focus:ring-primary-500">
+                                <span class="font-bold text-slate-700 block mb-1">"Abri um CNPJ / Funcionários..."</span>
+                                <span class="text-xs text-slate-500">Precisa para a equipe ou quer usar o CNPJ pra ter desconto.</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="motivo-feedback" class="hidden space-y-4"></div>
+                </div>
+            `;
         }
 
-        document.getElementById('mobile-toggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('-translate-x-full'));
-        window.onload = () => { lucide.createIcons(); navigateTo('dashboard'); };
+        function handleMotivo(motivo) {
+            clientData.motivoBusca = motivo;
+            const fb = document.getElementById('motivo-feedback');
+            fb.classList.remove('hidden');
+            fb.classList.add('fade-in');
+            
+            let insight = '';
+            let nextQ = '';
+            
+            if(motivo === 'insatisfacao') {
+                insight = 'O cliente está "fugindo da dor". Ele não quer apenas mudar, quer ter certeza de que não terá o mesmo problema. O foco aqui não é o preço, mas resolver a falha do plano atual.';
+                nextQ = '<em>"Poxa, te entendo perfeitamente. O que exatamente no seu plano atual te deixou mais frustrado? Foi o reajuste que pesou ou você teve alguma dor de cabeça com atendimento?"</em>';
+            } else if(motivo === 'seguranca') {
+                insight = 'Gatilho do Medo ativado. Este cliente quer segurança e acolhimento imediato. Provavelmente valoriza pronto-socorro próximo e facilidade de marcação.';
+                nextQ = '<em>"Nossa, sinto muito pelo susto. Saúde não avisa mesmo, né? Pra gente focar em te proteger melhor agora, quem vai entrar nesse plano com você?"</em>';
+            } else if(motivo === 'gestacao') {
+                insight = 'Gatilho de Novidade/Amor. Urgência altíssima devido às carências (300 dias para parto). Precisa de rede com boas maternidades.';
+                nextQ = '<em>"Que notícia maravilhosa, parabéns! Nesse caso a gente precisa ser bem estratégico por causa dos prazos de carência. Vocês já têm alguma maternidade em mente?"</em>';
+            } else if(motivo === 'empresarial') {
+                insight = 'Decisão mais racional. Pode buscar redução de impostos, retenção de talentos ou apenas usar o CNPJ para conseguir um plano mais barato para a família.';
+                nextQ = '<em>"Excelente decisão pra empresa. Me tira uma dúvida: esse plano vai ser um benefício pra equipe ou é mais focado em você, seus sócios e família?"</em>';
+            }
+
+            fb.innerHTML = `
+                ${createInsightBox('Análise do Comportamento', insight, 'neuro')}
+                ${createInsightBox('Como continuar a conversa:', nextQ, 'success')}
+                <div class="mt-6 border-t pt-4 flex justify-between items-center">
+                    <p class="text-sm text-slate-500">Motivo registrado. Vamos verificar a elegibilidade do cliente.</p>
+                    <button onclick="loadModule(3)" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded font-medium transition-colors">Avançar: Investigar Elegibilidade</button>
+                </div>
+            `;
+        }
+
+        // --- STREAMING_CHUNK:Renderizando Módulo 3 (Elegibilidade) ---
+        function renderModule3(wrapper) {
+            wrapper.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    ${createChatBubble(modules.find(m => m.id === 3).question)}
+
+                    ${createSectionTitle('Investigação de Elegibilidade', 'M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2')}
+                    <p class="text-slate-600 mb-6">Muitos clientes não sabem que podem ter até <strong>40% de desconto</strong> se contratarem via CNPJ ou plano de Adesão (formação). Precisamos descobrir isso antes de cotar.</p>
+
+                    <div class="mb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <button onclick="handleElegibilidade('cnpj')" class="text-left p-3 border border-slate-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-colors focus:ring-2 focus:ring-primary-500">
+                                <span class="font-bold text-slate-700">"Sim, tenho um CNPJ"</span>
+                                <span class="block text-xs text-slate-500 mt-1">(MEI, LTDA, etc)</span>
+                            </button>
+                            <button onclick="handleElegibilidade('adesao')" class="text-left p-3 border border-slate-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-colors focus:ring-2 focus:ring-primary-500">
+                                <span class="font-bold text-slate-700">"Tenho formação/sou estudante"</span>
+                                <span class="block text-xs text-slate-500 mt-1">(Entidades de classe)</span>
+                            </button>
+                            <button onclick="handleElegibilidade('cpf')" class="text-left p-3 border border-slate-200 rounded-lg hover:border-primary-500 hover:bg-primary-50 transition-colors focus:ring-2 focus:ring-primary-500">
+                                <span class="font-bold text-slate-700">"Não tenho nenhum dos dois"</span>
+                                <span class="block text-xs text-slate-500 mt-1">(Apenas CPF comum)</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="elegibilidade-feedback" class="hidden space-y-4"></div>
+                </div>
+            `;
+        }
+
+        function handleElegibilidade(tipo) {
+            const fb = document.getElementById('elegibilidade-feedback');
+            fb.classList.remove('hidden');
+            fb.classList.add('fade-in');
+            
+            let insight = '';
+            let proxPasso = '';
+            
+            if(tipo === 'cnpj') {
+                clientData.elegibilidade = 'CNPJ';
+                insight = 'Excelente! Planos PME (Pequenas e Médias Empresas) possuem tabelas muito mais atrativas. O CNPJ precisa estar ativo há pelo menos 6 meses na maioria das operadoras.';
+                proxPasso = `<button onclick="clientData.tipoPlano = 'PJ'; loadModule(5)" class="w-full bg-slate-800 hover:bg-slate-900 text-white px-4 py-3 rounded font-bold transition-colors">Avançar para Qualificação Empresarial (PJ)</button>`;
+            } else if(tipo === 'adesao') {
+                clientData.elegibilidade = 'Adesão (Entidade de Classe)';
+                insight = 'Ótimo! O cliente tem perfil para planos coletivos por adesão. O custo inicial é menor que o Pessoa Física comum. É essencial confirmar a profissão exata para checar a elegibilidade nas administradoras (Qualicorp, etc).';
+                proxPasso = `<button onclick="clientData.tipoPlano = 'Adesão'; loadModule(4)" class="w-full bg-primary-600 hover:bg-primary-700 text-white px-4 py-3 rounded font-bold transition-colors">Avançar para Qualificação Familiar (Adesão)</button>`;
+            } else {
+                clientData.elegibilidade = 'CPF Comum';
+                insight = 'Sem problemas. O foco será em planos Pessoa Física (PF) direto com a operadora. Lembre-se que algumas seguradoras premium não comercializam PF comum, então o foco será em operadoras regionais ou planos com coparticipação.';
+                proxPasso = `<button onclick="clientData.tipoPlano = 'PF'; loadModule(4)" class="w-full bg-primary-600 hover:bg-primary-700 text-white px-4 py-3 rounded font-bold transition-colors">Avançar para Qualificação Familiar (PF)</button>`;
+            }
+
+            fb.innerHTML = `
+                ${createInsightBox('Análise de Contratação', insight, 'success')}
+                <div class="mt-6 border-t pt-4 flex justify-end">
+                    ${proxPasso}
+                </div>
+            `;
+        }
+
+        // --- STREAMING_CHUNK:Renderizando Módulo 4 (Qualificação Familiar)... ---
+        function renderModule4(wrapper) {
+            wrapper.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    ${createChatBubble(modules.find(m => m.id === 4).question)}
+
+                    ${createSectionTitle('Qualificação Familiar (PF / Adesão)', 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z')}
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div class="bg-slate-50 p-5 rounded-lg border border-slate-200">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">No total, quantas pessoas entram no plano?</label>
+                            <input type="number" id="qtd-vidas" min="1" max="20" placeholder="Ex: 3" class="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-primary-500 focus:border-primary-500 mb-4">
+                            
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Sabe me dizer as idades? (Separe por vírgula)</label>
+                            <input type="text" id="idades-familia" placeholder="Ex: 35, 32, 8" class="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-primary-500 focus:border-primary-500 mb-4">
+                            
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Quais desses perfis vão participar?</label>
+                            <div class="space-y-2 mb-4">
+                                <label class="flex items-center gap-2 cursor-pointer p-2 bg-white border border-slate-200 hover:border-primary-400 rounded">
+                                    <input type="checkbox" id="dep-criancas" value="criancas" class="w-4 h-4 text-primary-600 rounded border-slate-300">
+                                    <span class="text-slate-700">Crianças / Bebês</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer p-2 bg-white border border-slate-200 hover:border-primary-400 rounded">
+                                    <input type="checkbox" id="dep-idosos" value="idosos" class="w-4 h-4 text-primary-600 rounded border-slate-300">
+                                    <span class="text-slate-700">Idosos (60+ anos)</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer p-2 bg-white border border-slate-200 hover:border-primary-400 rounded">
+                                    <input type="checkbox" id="dep-gestantes" value="gestantes" class="w-4 h-4 text-primary-600 rounded border-slate-300">
+                                    <span class="text-slate-700">Gestantes ou Planejam Engravidar</span>
+                                </label>
+                            </div>
+                            
+                            <button onclick="gerarDiagnosticoFamiliar()" class="w-full bg-secondary hover:bg-emerald-600 text-white py-3 rounded-lg font-semibold transition-colors">
+                                Analisar Perfil da Família
+                            </button>
+                        </div>
+                        
+                        <div id="diag-familiar-result" class="hidden bg-slate-50 p-5 rounded-lg border border-slate-200">
+                            <!-- Injetado via JS -->
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function gerarDiagnosticoFamiliar() {
+            const vidas = document.getElementById('qtd-vidas').value;
+            if(!vidas) { alert('Por favor, insira a quantidade de vidas.'); return; }
+            
+            clientData.tamanhoFamilia = parseInt(vidas);
+            
+            const idadesInput = document.getElementById('idades-familia').value;
+            clientData.idades = idadesInput.split(',').map(i => i.trim()).filter(i => i !== '');
+            
+            clientData.dependentes = [];
+            if(document.getElementById('dep-criancas').checked) clientData.dependentes.push('Crianças');
+            if(document.getElementById('dep-idosos').checked) clientData.dependentes.push('Idosos');
+            if(document.getElementById('dep-gestantes').checked) clientData.dependentes.push('Gestantes');
+
+            const res = document.getElementById('diag-familiar-result');
+            res.classList.remove('hidden');
+            res.classList.add('fade-in');
+
+            let diagnostico = `<h4 class="font-bold text-slate-800 mb-2 border-b pb-1">Análise Familiar</h4>`;
+            diagnostico += `<p class="text-sm text-slate-700 mb-1"><strong>Tamanho:</strong> ${vidas} vida(s).</p>`;
+            if (clientData.idades.length > 0) {
+                diagnostico += `<p class="text-sm text-slate-700 mb-2"><strong>Idades:</strong> ${clientData.idades.join(', ')}</p>`;
+            } else {
+                diagnostico += `<p class="text-sm text-slate-700 mb-2"><strong>Idades:</strong> Não informadas.</p>`;
+            }
+            
+            if(clientData.dependentes.length > 0) {
+                diagnostico += `<p class="text-sm text-slate-700 mb-4"><strong>Atenção especial para:</strong> ${clientData.dependentes.join(', ')}.</p>`;
+                
+                let dicas = [];
+                if(clientData.dependentes.includes('Crianças')) dicas.push('Foque em operadoras com forte rede de Pediatria, Hospitais Infantis e facilidade de telemedicina para madrugadas.');
+                if(clientData.dependentes.includes('Idosos')) dicas.push('Foque em rede própria da operadora (programas de prevenção) e evite coparticipação alta, pois a frequência de uso é maior.');
+                if(clientData.dependentes.includes('Gestantes')) dicas.push('Alerta vermelho para Carências (Parto é 300 dias). Foque em maternidades de referência e qualidade no berçário/UTI Neonatal.');
+                
+                diagnostico += `<div class="bg-amber-50 border-l-4 border-amber-500 p-3 text-sm text-amber-800 rounded">
+                    <strong>Sua Estratégia:</strong><br> ${dicas.join('<br><br>')}
+                </div>`;
+            } else {
+                diagnostico += `<div class="bg-blue-50 border-l-4 border-blue-500 p-3 text-sm text-blue-800 rounded">
+                    Perfil Jovem/Adulto sem dependentes complexos. Maior foco na relação custo-benefício e abrangência para viagens.
+                </div>`;
+            }
+
+            diagnostico += `
+                <div class="mt-6 pt-4 border-t border-slate-200">
+                    <button onclick="loadModule(6)" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-lg font-bold transition-colors">
+                        Avançar: Localização e Abrangência
+                    </button>
+                </div>
+            `;
+            
+            res.innerHTML = diagnostico;
+        }
+
+        // --- STREAMING_CHUNK:Renderizando Módulo 5 (Qualificação PJ)... ---
+        function renderModule5(wrapper) {
+            wrapper.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    ${createChatBubble(modules.find(m => m.id === 5).question)}
+
+                    ${createSectionTitle('Qualificação Empresarial (PJ)', 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4')}
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div class="space-y-4 bg-slate-50 p-5 rounded-lg border border-slate-200">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Qual o tipo de vínculo da equipe?</label>
+                                <select id="pj-tipo" class="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-primary-500 bg-white" onchange="togglePjDetalhes()">
+                                    <option value="familiar">É só para Sócios e Familiares ("Plano Familiar com CNPJ")</option>
+                                    <option value="beneficio">É um Benefício para Funcionários CLT</option>
+                                    <option value="misto">É Misto (Sócios + Equipe CLT)</option>
+                                </select>
+                            </div>
+
+                            <div id="pj-detalhes-vinculo-container" class="mt-2 p-3 bg-indigo-50 border border-indigo-100 rounded-lg">
+                                <label id="pj-detalhes-label" class="block text-sm font-semibold text-indigo-900 mb-1">Quais os graus de parentesco com o titular?</label>
+                                <input type="text" id="pj-detalhes-input" placeholder="Ex: Esposa e 2 filhos" class="w-full p-2 border border-indigo-200 rounded focus:ring-2 focus:ring-primary-500 bg-white text-sm">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">CNPJ da Empresa</label>
+                                <input type="text" id="pj-cnpj" placeholder="Ex: 00.000.000/0000-00" class="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-primary-500 bg-white">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Quantas vidas no total? (Titulares + Dependentes)</label>
+                                <select id="pj-vidas" class="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-primary-500 bg-white">
+                                    <option value="1-2">1 a 2 vidas (MEI / Pequena)</option>
+                                    <option value="3-29">3 a 29 vidas (PME I)</option>
+                                    <option value="30-99">30 a 99 vidas (PME II)</option>
+                                    <option value="100+">Acima de 100 vidas (Corporativo)</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Você sabe as idades ou a média de idade? (Opcional)</label>
+                                <input type="text" id="idades-pj" placeholder="Ex: 45, 42, 18, 15" class="w-full p-3 border border-slate-300 rounded focus:ring-2 focus:ring-primary-500 mb-4 bg-white">
+                            </div>
+
+                            <button onclick="gerarDiagnosticoPJ()" class="w-full bg-secondary hover:bg-emerald-600 text-white py-3 rounded-lg font-semibold transition-colors mt-2">
+                                Analisar Perfil da Empresa
+                            </button>
+                        </div>
+
+                        <div id="diag-pj-result" class="hidden bg-slate-50 p-5 rounded-lg border border-slate-200"></div>
+                    </div>
+                </div>
+            `;
+            setTimeout(togglePjDetalhes, 50); // Ajusta a pergunta dinamicamente ao abrir
+        }
+
+        function togglePjDetalhes() {
+            const tipo = document.getElementById('pj-tipo');
+            if(!tipo) return;
+            const label = document.getElementById('pj-detalhes-label');
+            const input = document.getElementById('pj-detalhes-input');
+
+            if (tipo.value === 'familiar') {
+                label.innerText = 'Quais os graus de parentesco com o titular? (Regra ANS)';
+                input.placeholder = 'Ex: Esposa e 2 filhos';
+            } else if (tipo.value === 'beneficio') {
+                label.innerText = 'Quantos sócios constam no contrato social do CNPJ?';
+                input.placeholder = 'Ex: 2 sócios';
+            } else if (tipo.value === 'misto') {
+                label.innerText = 'Quantos sócios no CNPJ e qual o parentesco dos familiares?';
+                input.placeholder = 'Ex: 2 sócios, esposa e 1 funcionário';
+            }
+        }
+
+        function gerarDiagnosticoPJ() {
+            const vidas = document.getElementById('pj-vidas').value;
+            const tipo = document.getElementById('pj-tipo').value;
+            const idadesInput = document.getElementById('idades-pj').value;
+            const cnpjInput = document.getElementById('pj-cnpj').value;
+            const detalhesVinculo = document.getElementById('pj-detalhes-input').value;
+            
+            clientData.tipoPlano = 'PJ';
+            clientData.empresaVidas = vidas;
+            clientData.idades = idadesInput.split(',').map(i => i.trim()).filter(i => i !== '');
+            clientData.empresaCNPJ = cnpjInput.trim();
+            clientData.empresaDetalhesVinculo = detalhesVinculo.trim();
+            
+            const res = document.getElementById('diag-pj-result');
+            res.classList.remove('hidden');
+            res.classList.add('fade-in');
+
+            let insight = '';
+            let isencao = '';
+
+            if(vidas === '1-2') {
+                insight = 'Atenção: Muitas operadoras exigem MEI ativo há mais de 6 meses. O plano funciona basicamente como um familiar com desconto.';
+                isencao = 'Padrão ANS (sem isenção).';
+            } else if(vidas === '3-29') {
+                insight = 'Porte PME comum. Já existe maior flexibilidade nas tabelas de preços e possíveis promoções de carência.';
+                isencao = 'Redução de carências (aproveitamento), mas sem isenção total para doenças pré-existentes.';
+            } else if (vidas === '30-99' || vidas === '100+') {
+                insight = 'Venda complexa B2B. A decisão passa pelo RH e Diretoria Financeira. Foco em rede, sinistralidade e gestão populacional.';
+                isencao = '<strong class="text-green-600">ISENÇÃO TOTAL de carências (inclusive parto e pré-existentes) pela lei ANS (acima de 30 vidas). Excelente argumento de venda!</strong>';
+            }
+
+            if(tipo === 'beneficio') {
+                insight += ' <br><br><strong>Dica de Ouro:</strong> Ofereça planos com Coparticipação. Ajuda a reduzir a fatura da empresa e inibe o uso desnecessário pela equipe.';
+            } else if (tipo === 'familiar') {
+                insight += ' <br><br><strong>Dica de Ouro:</strong> O foco é a qualidade da rede. Venda o CNPJ apenas como um veículo pra ele ter um plano melhor mais barato.';
+            }
+
+            res.innerHTML = `
+                <h4 class="font-bold text-slate-800 mb-3 border-b pb-1">Análise Empresarial</h4>
+                ${clientData.idades.length > 0 ? `<p class="text-sm text-slate-700 mb-3"><strong>Idades mapeadas:</strong> ${clientData.idades.join(', ')}</p>` : ''}
+                ${clientData.empresaDetalhesVinculo ? `<p class="text-sm text-slate-700 mb-3"><strong>Detalhes do Vínculo:</strong> ${clientData.empresaDetalhesVinculo}</p>` : ''}
+                ${createInsightBox('Análise Comercial B2B', insight, 'info')}
+                
+                <div class="mt-4 p-3 bg-purple-50 border border-purple-200 rounded text-purple-800 text-sm">
+                    <strong>Status de Carência para a Empresa:</strong> <br>${isencao}
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-slate-200 flex justify-end">
+                    <button onclick="loadModule(6)" class="w-full bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-bold transition-colors">
+                        Avançar: Localização e Abrangência
+                    </button>
+                </div>
+            `;
+        }
+
+        // --- STREAMING_CHUNK:Renderizando Módulo 6 (Localização e Abrangência)... ---
+        function renderModule6(wrapper) {
+            wrapper.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    ${createChatBubble(modules.find(m => m.id === 6).question)}
+
+                    ${createSectionTitle('Localização e Abrangência', 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z')}
+                    <p class="text-slate-600 mb-6">A região do cliente define quais operadoras podem ser comercializadas. A frequência de viagens define se o plano DEVE ser <strong>Nacional</strong> ou se um plano <strong>Regional</strong> (que reduz drasticamente o preço) irá atendê-lo bem.</p>
+                    
+                    <div class="space-y-4 mb-6 bg-slate-50 p-5 rounded-lg border border-slate-200">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Estado (UF)</label>
+                                <input type="text" id="loc-estado" placeholder="Ex: SP, RJ, MG" class="w-full p-3 border border-slate-300 bg-white rounded focus:ring-2 focus:ring-primary-500">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Cidade</label>
+                                <input type="text" id="loc-cidade" placeholder="Ex: São Paulo" class="w-full p-3 border border-slate-300 bg-white rounded focus:ring-2 focus:ring-primary-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Bairro (Pra gente mapear os hospitais perto dele)</label>
+                            <input type="text" id="loc-bairro" placeholder="Ex: Tatuapé, Barra da Tijuca" class="w-full p-3 border border-slate-300 bg-white rounded focus:ring-2 focus:ring-primary-500">
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-200 mt-4">
+                            <label class="block text-sm font-semibold text-slate-700 mb-3">Costumam realizar viagens com frequência?</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-3 cursor-pointer p-3 border border-slate-300 rounded-lg hover:border-primary-500 bg-white">
+                                    <input type="radio" name="viagem" value="Não, rotina local" class="w-5 h-5 text-primary-600 focus:ring-primary-500">
+                                    <span class="text-slate-700 text-sm">Não, a rotina é mais local (Focar em <strong>Planos Regionais</strong>)</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer p-3 border border-slate-300 rounded-lg hover:border-primary-500 bg-white">
+                                    <input type="radio" name="viagem" value="Sim, Nacional" class="w-5 h-5 text-primary-600 focus:ring-primary-500">
+                                    <span class="text-slate-700 text-sm">Sim, viajamos pelo Brasil (Obrigatório <strong>Abrangência Nacional</strong>)</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer p-3 border border-slate-300 rounded-lg hover:border-primary-500 bg-white">
+                                    <input type="radio" name="viagem" value="Sim, Internacional" class="w-5 h-5 text-primary-600 focus:ring-primary-500">
+                                    <span class="text-slate-700 text-sm">Sim, viagens Internacionais (Foco em operadoras com <strong>Seguro Viagem</strong>)</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button onclick="salvarLocalizacao()" class="w-full bg-secondary hover:bg-emerald-600 text-white py-3 rounded-lg font-semibold transition-colors mt-4">
+                            Salvar Dados de Localização
+                        </button>
+                    </div>
+
+                    <div id="loc-feedback" class="hidden"></div>
+                </div>
+            `;
+        }
+
+        function salvarLocalizacao() {
+            clientData.estado = document.getElementById('loc-estado').value.trim();
+            clientData.cidade = document.getElementById('loc-cidade').value.trim();
+            clientData.bairro = document.getElementById('loc-bairro').value.trim();
+            
+            const viagemSelect = document.querySelector('input[name="viagem"]:checked');
+            if(viagemSelect) {
+                clientData.viagens = viagemSelect.value;
+            }
+
+            if(!clientData.estado || !clientData.cidade) {
+                alert("Por favor, preencha pelo menos o Estado e a Cidade para continuar.");
+                return;
+            }
+
+            const fb = document.getElementById('loc-feedback');
+            fb.classList.remove('hidden');
+            fb.classList.add('fade-in');
+            
+            let insight = "";
+            if(clientData.viagens && clientData.viagens.includes('Não')) {
+                insight = "Ótimo! Ofereça <strong>Planos Regionais</strong> (ex: Unimed Regional, Hapvida, GNDI, Amil Fácil). Eles custam em média 30% a 40% a menos que os nacionais, sendo uma excelente âncora de preço baixo.";
+            } else if(clientData.viagens && clientData.viagens.includes('Nacional')) {
+                insight = "Atenção: A <strong>Abrangência Nacional</strong> é obrigatória. Cuidado ao tentar 'vencer pelo preço' vendendo regional, pois quando o cliente viajar e não tiver cobertura, a culpa será do corretor.";
+            } else if(clientData.viagens && clientData.viagens.includes('Internacional')) {
+                insight = "Perfil Premium/Executivo. Foque nas linhas altas (Bradesco, SulAmérica, Omint, Care Plus) que oferecem cobertura internacional (Tratado de Schengen).";
+            } else {
+                insight = "Nenhuma preferência de viagem informada. Fique atento se ele mencionar viagens durante as próximas perguntas.";
+            }
+
+            fb.innerHTML = `
+                ${createInsightBox('Estratégia de Abrangência', insight, 'success')}
+                <div class="mt-6 border-t pt-4 flex justify-end">
+                    <button onclick="loadModule(7)" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-bold transition-colors">Avançar: Histórico do Plano</button>
+                </div>
+            `;
+        }
+
+        function renderModule7(wrapper) {
+            wrapper.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    ${createChatBubble(modules.find(m => m.id === 7).question)}
+
+                    ${createSectionTitle('Histórico do Plano Atual/Anterior', 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z')}
+                    <p class="text-slate-600 mb-6">Entender se o cliente já tem um plano nos dá um referencial de preço, rede e revela se podemos aproveitar prazos de carência (Portabilidade ou Compra de Carência).</p>
+
+                    <div class="space-y-4 bg-slate-50 p-5 rounded-lg border border-slate-200">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-2">Qual a situação dele hoje?</label>
+                            <select id="hist-tem-plano" class="w-full p-3 border border-slate-300 bg-white rounded focus:ring-2 focus:ring-primary-500" onchange="toggleHistDetalhes()">
+                                <option value="">Selecione...</option>
+                                <option value="sim">Tem plano ativo atualmente</option>
+                                <option value="nao">Não tem nenhum ou faz muitos anos que não tem</option>
+                            </select>
+                        </div>
+
+                        <div id="hist-detalhes" class="hidden space-y-4 pt-4 border-t border-slate-200 mt-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Qual é a Operadora e o nome do Plano?</label>
+                                <input type="text" id="hist-operadora" placeholder="Ex: Amil Fácil, Bradesco Top, SulAmérica..." class="w-full p-3 border border-slate-300 bg-white rounded focus:ring-2 focus:ring-primary-500">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Faz quanto tempo que ele está nesse plano?</label>
+                                <select id="hist-tempo" class="w-full p-3 border border-slate-300 bg-white rounded focus:ring-2 focus:ring-primary-500">
+                                    <option value="">Selecione...</option>
+                                    <option value="Menos de 1 ano">Menos de 1 ano (Ainda em período de carência cheio)</option>
+                                    <option value="1 a 2 anos">Entre 1 e 2 anos (Possível aproveitamento parcial)</option>
+                                    <option value="Mais de 2 anos">Mais de 2 anos (Elegível a portabilidade / compra total)</option>
+                                </select>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">Como é a acomodação atual?</label>
+                                    <select id="hist-acomodacao" class="w-full p-3 border border-slate-300 bg-white rounded focus:ring-2 focus:ring-primary-500">
+                                        <option value="">Selecione...</option>
+                                        <option value="Enfermaria">Enfermaria (Quarto Coletivo)</option>
+                                        <option value="Apartamento">Apartamento (Quarto Individual)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-1">O plano atual tem Coparticipação?</label>
+                                    <select id="hist-copart" class="w-full p-3 border border-slate-300 bg-white rounded focus:ring-2 focus:ring-primary-500">
+                                        <option value="">Selecione...</option>
+                                        <option value="Sim">Sim, ele paga quando usa</option>
+                                        <option value="Não">Não, o valor é fixo</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="salvarHistorico()" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-lg font-bold transition-colors mt-6">
+                            Salvar Histórico e Avançar
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function toggleHistDetalhes() {
+            const val = document.getElementById('hist-tem-plano').value;
+            const detalhes = document.getElementById('hist-detalhes');
+            if(val === 'sim') {
+                detalhes.classList.remove('hidden');
+                detalhes.classList.add('fade-in');
+            } else {
+                detalhes.classList.add('hidden');
+            }
+        }
+
+        function salvarHistorico() {
+            const temPlano = document.getElementById('hist-tem-plano').value;
+            if(!temPlano) {
+                alert("Por favor, selecione a situação atual do cliente.");
+                return;
+            }
+
+            if(temPlano === 'sim') {
+                clientData.planoAnterior = {
+                    temPlano: 'Ativo',
+                    operadora: document.getElementById('hist-operadora').value || 'Não informada',
+                    tempo: document.getElementById('hist-tempo').value || 'Não informado',
+                    acomodacao: document.getElementById('hist-acomodacao').value || 'Não informada',
+                    coparticipacao: document.getElementById('hist-copart').value || 'Não informada'
+                };
+            } else {
+                clientData.planoAnterior = { temPlano: 'Não / Nenhum', operadora: '-', tempo: '-', acomodacao: '-', coparticipacao: '-' };
+            }
+
+            loadModule(8);
+        }
+
+        function renderModule8(wrapper) {
+            wrapper.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    ${createChatBubble(modules.find(m => m.id === 8).question)}
+
+                    ${createSectionTitle('Classificação do Perfil de Uso', 'M9 19v-6a2 2 0 00-2-2H4a2 2 0 00-2 2v6a2 2 0 002 2h3a2 2 0 002-2zm0 0V9a2 2 0 012-2h3a2 2 0 012 2v10m-6 0a2 2 0 002 2h3a2 2 0 002-2m0 0V5a2 2 0 012-2h3a2 2 0 012 2v14a2 2 0 01-2 2h-3a2 2 0 01-2-2z')}
+                    <p class="text-slate-600 mb-6">Como o cliente pretende usar o plano? Essa informação é crucial para definir se a Coparticipação será benéfica ou um tiro no pé.</p>
+                    
+                    <div class="space-y-3 mb-6">
+                        <button onclick="setUso('baixa')" class="w-full text-left p-4 border border-slate-200 rounded-lg hover:border-green-500 hover:bg-green-50 transition-colors group flex justify-between items-center">
+                            <div>
+                                <h4 class="font-bold text-slate-800 group-hover:text-green-700 text-lg">🟢 Baixa Utilização (Seguro Catástrofe)</h4>
+                                <p class="text-sm text-slate-500 mt-1">Vai muito pouco ao médico. Quer o plano apenas "por garantia" em caso de acidentes, cirurgias ou internações.</p>
+                            </div>
+                        </button>
+                        
+                        <button onclick="setUso('media')" class="w-full text-left p-4 border border-slate-200 rounded-lg hover:border-amber-500 hover:bg-amber-50 transition-colors group flex justify-between items-center">
+                            <div>
+                                <h4 class="font-bold text-slate-800 group-hover:text-amber-700 text-lg">🟡 Média Utilização (Preventivo)</h4>
+                                <p class="text-sm text-slate-500 mt-1">Check-up anual, exames de rotina, gripes sazonais. Uso normal de um adulto que se cuida.</p>
+                            </div>
+                        </button>
+                        
+                        <button onclick="setUso('alta')" class="w-full text-left p-4 border border-slate-200 rounded-lg hover:border-red-500 hover:bg-red-50 transition-colors group flex justify-between items-center">
+                            <div>
+                                <h4 class="font-bold text-slate-800 group-hover:text-red-700 text-lg">🔴 Alta Utilização (Crônico / Terapias)</h4>
+                                <p class="text-sm text-slate-500 mt-1">Tratamentos contínuos (psicologia, fisioterapia), doenças crônicas ou filhos pequenos que vão muito ao PS.</p>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div id="uso-feedback" class="hidden"></div>
+                </div>
+            `;
+        }
+
+        function setUso(tipo) {
+            clientData.perfilUso = tipo;
+            const fb = document.getElementById('uso-feedback');
+            fb.classList.remove('hidden');
+            fb.classList.add('fade-in');
+            
+            let diag = '';
+            if(tipo === 'baixa') {
+                diag = `<strong>Dica Comercial:</strong> Cliente ideal para planos <strong>COM COPARTICIPAÇÃO</strong>. A mensalidade fica menor e como ele não usa, vai sentir muita vantagem no bolso.`;
+            } else if(tipo === 'media') {
+                diag = `<strong>Dica Comercial:</strong> Coparticipação ainda é válida, mas você precisa explicar bem que haverá pequenas cobranças adicionais em meses de exames de rotina para não ter surpresa.`;
+            } else {
+                diag = `<strong>ALERTA VERMELHO:</strong> Alta utilização exige planos <strong>SEM COPARTICIPAÇÃO</strong>. Se vender com coparticipação, a fatura vai estourar, o cliente vai cancelar e culpar você.`;
+            }
+
+            fb.innerHTML = `
+                ${createInsightBox('O que isso significa pra você?', diag, 'info')}
+                <div class="mt-6 flex justify-end">
+                    <button onclick="loadModule(9)" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-bold transition-colors">Avançar: Mapear Rede Credenciada</button>
+                </div>
+            `;
+        }
+
+        function renderModule9(wrapper) {
+            wrapper.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    ${createChatBubble(modules.find(m => m.id === 9).question)}
+
+                    ${createSectionTitle('Mapeamento da Rede', 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4')}
+                    <p class="text-slate-600 mb-6">Descubra se o cliente já possui um viés de marca ou se a família inteira já faz tratamento em um local específico.</p>
+
+                    <div class="space-y-4 bg-slate-50 p-5 rounded-lg border border-slate-200">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Anotar preferência de Operadora (se houver):</label>
+                            <input type="text" id="pref-operadora" placeholder="Ex: Amil, Bradesco, SulAmérica (ou deixe em branco)" class="w-full p-3 border border-slate-300 bg-white rounded focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        
+                        <div class="pt-2">
+                            <label class="block text-sm font-semibold text-slate-700 mb-1">Anotar Hospitais e Laboratórios indispensáveis:</label>
+                            <input type="text" id="pref-hospitais" placeholder="Ex: Hospital São Luiz, Rede D'Or, Fleury (ou deixe em branco)" class="w-full p-3 border border-slate-300 bg-white rounded focus:ring-2 focus:ring-primary-500">
+                        </div>
+
+                        <button onclick="salvarRede()" class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-lg font-bold transition-colors mt-6">
+                            Salvar Preferências e Avançar
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function salvarRede() {
+            const operadora = document.getElementById('pref-operadora').value.trim();
+            const hospitais = document.getElementById('pref-hospitais').value.trim();
+            
+            clientData.redeImportante = [];
+            if (operadora) clientData.redeImportante.push(`Operadora: ${operadora}`);
+            if (hospitais) clientData.redeImportante.push(`Hospitais/Labs: ${hospitais}`);
+            
+            if (clientData.redeImportante.length === 0) {
+                clientData.redeImportante.push("Nenhuma preferência forte anotada.");
+            }
+            
+            loadModule(10);
+        }
+
+        function renderModule10(wrapper) {
+            wrapper.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    ${createChatBubble(modules.find(m => m.id === 10).question)}
+
+                    ${createSectionTitle('Configuração Desejada', 'M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4')}
+                    <p class="text-slate-600 mb-4">Apresente as opções de acomodação e ajude o cliente a decidir entre um plano com coparticipação (mais barato todo mês) ou um plano sem (previsibilidade).</p>
+
+                    ${createInsightBox('Como explicar a Coparticipação para o cliente?', '<strong>"A coparticipação funciona assim:</strong> A sua mensalidade fica até 30% mais barata. Em troca, você só paga uma pequena taxinha tabelada nos meses em que for usar o plano pra fazer uma consulta ou exame (ex: R$ 20 numa consulta). Se não usar naquele mês, paga só a mensalidade baixinha. É perfeito pra quem quer economizar e tem saúde preventiva."', 'info')}
+
+                    <div class="space-y-6 bg-slate-50 p-5 rounded-lg border border-slate-200 mt-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-700 mb-3">O cliente tem interesse em Coparticipação?</label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <label class="flex flex-col p-4 border border-slate-300 rounded-lg cursor-pointer hover:border-primary-500 bg-white group">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <input type="radio" name="conf-copart" value="Com Coparticipação" class="w-5 h-5 text-primary-600">
+                                        <span class="font-bold text-slate-800 text-lg">Sim, Com Coparticipação</span>
+                                    </div>
+                                    <span class="text-sm text-slate-500 pl-7">Busca mensalidade menor, topa pagar taxinhas ao usar.</span>
+                                </label>
+                                <label class="flex flex-col p-4 border border-slate-300 rounded-lg cursor-pointer hover:border-primary-500 bg-white group">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <input type="radio" name="conf-copart" value="Sem Coparticipação" class="w-5 h-5 text-primary-600">
+                                        <span class="font-bold text-slate-800 text-lg">Não, Sem Coparticipação</span>
+                                    </div>
+                                    <span class="text-sm text-slate-500 pl-7">Quer pagar valor fixo e ter previsibilidade total (sem surpresas).</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-200">
+                            <label class="block text-sm font-semibold text-slate-700 mb-3">Qual o tipo de Acomodação desejada?</label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <label class="flex flex-col p-4 border border-slate-300 rounded-lg cursor-pointer hover:border-primary-500 bg-white group">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <input type="radio" name="conf-acom" value="Enfermaria" class="w-5 h-5 text-primary-600">
+                                        <span class="font-bold text-slate-800 text-lg">Enfermaria</span>
+                                    </div>
+                                    <span class="text-sm text-slate-500 pl-7">Quarto coletivo. Mais econômico. Horários restritos.</span>
+                                </label>
+                                <label class="flex flex-col p-4 border border-slate-300 rounded-lg cursor-pointer hover:border-primary-500 bg-white group">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <input type="radio" name="conf-acom" value="Apartamento" class="w-5 h-5 text-primary-600">
+                                        <span class="font-bold text-slate-800 text-lg">Apartamento</span>
+                                    </div>
+                                    <span class="text-sm text-slate-500 pl-7">Quarto individual, banheiro privado, direito a acompanhante.</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button onclick="salvarConfigDesejada()" class="w-full bg-secondary hover:bg-emerald-600 text-white py-4 rounded-lg font-bold transition-colors mt-6 text-lg">
+                            Salvar Configurações e Avançar
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function salvarConfigDesejada() {
+            const copart = document.querySelector('input[name="conf-copart"]:checked');
+            const acom = document.querySelector('input[name="conf-acom"]:checked');
+
+            if (!copart || !acom) {
+                alert("Por favor, selecione as preferências do cliente para avançar.");
+                return;
+            }
+
+            clientData.configDesejada = {
+                coparticipacao: copart.value,
+                acomodacao: acom.value
+            };
+
+            loadModule(11);
+        }
+
+        function renderModule11(wrapper) {
+            const nomeC = clientData.nomeCliente || '[Nome]';
+            
+            wrapper.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    ${createChatBubble(`Perfeito, ${nomeC}. Já tenho tudo o que preciso. Para eu te apresentar as opções de forma clara, qual o melhor dia e horário para fazermos uma nova reunião rápida de 15 minutos?`)}
+
+                    ${createSectionTitle('Agendamento e Encerramento', 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z')}
+                    <p class="text-slate-600 mb-6">O objetivo desta etapa final não é vender o plano agora, mas sim <strong>vender a próxima reunião</strong>. Nunca encerre uma qualificação sem um compromisso claro agendado.</p>
+
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 mb-6">
+                        <h4 class="font-bold text-slate-800 mb-4 text-lg border-b border-slate-200 pb-2">Roteiro de Fechamento</h4>
+                        
+                        <div class="space-y-5">
+                            <div>
+                                <span class="text-sm font-bold text-primary-700 uppercase tracking-wider block mb-2">1. Transição para o Agendamento (A Escolha Guiada)</span>
+                                <p class="text-slate-700 italic bg-white p-4 border border-slate-200 rounded shadow-sm text-lg leading-relaxed">"Com essas informações, já tenho tudo o que preciso para fazer o estudo de mercado e desenhar a melhor proteção para você. Para eu te apresentar essas opções de forma clara e sem te deixar com dúvidas, <strong>fica melhor falarmos amanhã de manhã ou na parte da tarde?</strong>"</p>
+                            </div>
+
+                            <div>
+                                <span class="text-sm font-bold text-primary-700 uppercase tracking-wider block mb-2">2. Agradecimento e Despedida</span>
+                                <p class="text-slate-700 italic bg-white p-4 border border-slate-200 rounded shadow-sm text-lg leading-relaxed">"Combinado então! Agradeço muito pelo seu tempo e pela confiança de compartilhar essas informações comigo hoje. Vou preparar um material bem focado no que conversamos. Te mando o convite da nossa reunião agora no WhatsApp. Um ótimo dia para você!"</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    ${createInsightBox('Perguntas e Objeções Comuns no Agendamento', `<strong>Cliente: "Não precisa de reunião, pode me mandar a cotação no WhatsApp?"</strong><br><em>Você: "Posso mandar o resumo sim, ${nomeC}. Mas como saúde é coisa séria e envolve regras de carência e rede credenciada, eu faço questão de te apresentar os detalhes em uma ligação de 10 minutinhos para garantir que você não tenha dor de cabeça no futuro. Quinta às 10h ou às 15h fica melhor?"</em><br><br><strong>Cliente: "Vou ver com meu sócio/esposa e te aviso."</strong><br><em>Você: "Excelente ideia. Para ganharmos tempo, o que acha de já deixarmos um horário pré-agendado para sexta-feira? Você inclui ele(a) na reunião e eu já tiro as dúvidas de vocês dois ao mesmo tempo."</em>`, 'warning')}
+
+                    <div class="bg-slate-50 p-6 rounded-lg border border-slate-200 mb-6 mt-6">
+                        <h4 class="font-bold text-slate-800 mb-4 text-lg border-b border-slate-200 pb-2 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            Confirmação do Agendamento
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Data da Reunião de Proposta</label>
+                                <input type="date" id="agendamento-data" class="w-full p-3 border border-slate-300 bg-white rounded focus:ring-2 focus:ring-primary-500" value="${clientData.dataReuniao || ''}">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">Horário da Reunião</label>
+                                <input type="time" id="agendamento-hora" class="w-full p-3 border border-slate-300 bg-white rounded focus:ring-2 focus:ring-primary-500" value="${clientData.horaReuniao || ''}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex justify-end">
+                        <button onclick="salvarAgendamento()" class="bg-slate-900 hover:bg-black text-white px-8 py-4 rounded-xl font-bold shadow-lg transition-transform transform hover:-translate-y-1 flex items-center gap-3 text-lg w-full md:w-auto justify-center">
+                            Gerar Diagnóstico Final Completo
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function salvarAgendamento() {
+            clientData.dataReuniao = document.getElementById('agendamento-data').value;
+            clientData.horaReuniao = document.getElementById('agendamento-hora').value;
+            loadModule(12);
+        }
+
+        // --- STREAMING_CHUNK:Renderizando Módulo 12 (Resumo Final)... ---
+        function renderModule12(wrapper) {
+            if (!clientData.tipoPlano) {
+                wrapper.innerHTML = `
+                    <div class="bg-red-50 p-6 rounded-xl border border-red-200 text-center no-print">
+                        <h3 class="text-red-800 font-bold mb-2">Dados Incompletos</h3>
+                        <p class="text-red-600 mb-4">Você pulou etapas da nossa conversa. Volte e faça as perguntas pro cliente para gerar um relatório de verdade.</p>
+                        <button onclick="loadModule(1)" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-bold">Começar Bate-papo</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const isPJ = clientData.tipoPlano === 'PJ';
+            const vidasTxt = isPJ ? clientData.empresaVidas + ' vidas estimadas' : clientData.tamanhoFamilia + ' vidas';
+            const cnpjTxt = isPJ && clientData.empresaCNPJ ? `<br><span class="text-sm text-slate-600 mt-1 inline-block">CNPJ: ${clientData.empresaCNPJ}</span>` : '';
+            const vinculoTxt = isPJ && clientData.empresaDetalhesVinculo ? `<br><span class="text-sm text-slate-600 mt-1 inline-block">Vínculo detalhado: ${clientData.empresaDetalhesVinculo}</span>` : '';
+            const usoMap = { 'baixa': 'Baixa (Uso Pontual)', 'media': 'Média (Preventivo)', 'alta': 'Alta (Crônico/Terapias)' };
+            
+            const motivoMap = { 
+                'insatisfacao': 'Insatisfeito com o plano atual', 
+                'seguranca': 'Tomou um susto / Prevenção familiar', 
+                'gestacao': 'Esposa grávida / Planejamento', 
+                'empresarial': 'Abertura de CNPJ / Precisa pra Equipe' 
+            };
+            
+            const conf = clientData.configDesejada || { acomodacao: 'Não definiu', coparticipacao: 'Não definiu' };
+            const hist = clientData.planoAnterior || { temPlano: 'Não informado', operadora: '-', acomodacao: '-', coparticipacao: '-' };
+            
+            let dataFormatada = 'Data não definida';
+            if(clientData.dataReuniao) {
+                dataFormatada = clientData.dataReuniao.split('-').reverse().join('/');
+            }
+
+            wrapper.innerHTML = `
+                <div class="space-y-6 fade-in">
+                    <!-- Dashboard Final -->
+                    <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-t-primary-500">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h2 class="text-2xl font-bold text-slate-800 mb-1">Dossiê do Cliente: <span class="text-primary-700">${clientData.nomeCliente || 'Não informado'}</span></h2>
+                                <p class="text-slate-500">Resumo completo da qualificação. Assessor(a): <span class="font-semibold text-slate-700">${clientData.nomeAssessor || 'Não informado'}</span></p>
+                            </div>
+                            <button onclick="window.print()" class="text-slate-400 hover:text-slate-700 no-print bg-slate-50 p-3 rounded-full hover:bg-slate-100 transition-colors" title="Imprimir / Salvar PDF">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                            </button>
+                        </div>
+
+                        <!-- Sessão de Respostas -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-bold text-slate-800 border-b border-slate-200 pb-2 mb-4 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                                Resumo do Bate-papo
+                            </h3>
+                            
+                            <div class="space-y-3">
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col md:flex-row md:items-start md:gap-4">
+                                    <div class="md:w-1/3 shrink-0 text-sm text-slate-500 font-semibold mb-1 md:mb-0">Motivo de estar procurando hoje:</div>
+                                    <div class="md:w-2/3 font-medium text-slate-800">${motivoMap[clientData.motivoBusca] || 'Não falou'}</div>
+                                </div>
+                                
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col md:flex-row md:items-start md:gap-4">
+                                    <div class="md:w-1/3 shrink-0 text-sm text-slate-500 font-semibold mb-1 md:mb-0">Como vai ser o contrato:</div>
+                                    <div class="md:w-2/3 font-medium text-slate-800">${clientData.elegibilidade || 'Não sabe'} <span class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded text-xs ml-2">${clientData.tipoPlano || '-'}</span>${cnpjTxt}</div>
+                                </div>
+                                
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col md:flex-row md:items-start md:gap-4">
+                                    <div class="md:w-1/3 shrink-0 text-sm text-slate-500 font-semibold mb-1 md:mb-0">Quem vai entrar no plano:</div>
+                                    <div class="md:w-2/3 font-medium text-slate-800">
+                                        ${vidasTxt} ${vinculoTxt} <br>
+                                        <span class="text-sm text-slate-600 mt-1 inline-block">Idades mapeadas: ${clientData.idades && clientData.idades.length > 0 ? clientData.idades.join(', ') : 'Não passou as idades'}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col md:flex-row md:items-start md:gap-4">
+                                    <div class="md:w-1/3 shrink-0 text-sm text-slate-500 font-semibold mb-1 md:mb-0">Onde moram / Viajam?</div>
+                                    <div class="md:w-2/3 font-medium text-slate-800">${clientData.cidade || 'Cidade não informada'} - ${clientData.estado || ''} <br><span class="text-sm text-slate-600 mt-1 inline-block">Viagens: ${clientData.viagens || 'Não respondeu'}</span></div>
+                                </div>
+                                
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col md:flex-row md:items-start md:gap-4">
+                                    <div class="md:w-1/3 shrink-0 text-sm text-slate-500 font-semibold mb-1 md:mb-0">Bagagem de plano anterior:</div>
+                                    <div class="md:w-2/3 font-medium text-slate-800">
+                                        Situação: ${hist.temPlano} 
+                                        ${hist.temPlano !== 'Não / Nenhum' && hist.temPlano !== 'Não informado' ? `<br><span class="text-sm text-slate-600 mt-1 inline-block">Era da ${hist.operadora} | Quarto ${hist.acomodacao} | Coparticipação: ${hist.coparticipacao}</span>` : ''}
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col md:flex-row md:items-start md:gap-4">
+                                    <div class="md:w-1/3 shrink-0 text-sm text-slate-500 font-semibold mb-1 md:mb-0">Frequência no médico:</div>
+                                    <div class="md:w-2/3 font-medium text-slate-800">${usoMap[clientData.perfilUso] || 'Não deixou claro'}</div>
+                                </div>
+
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col md:flex-row md:items-start md:gap-4">
+                                    <div class="md:w-1/3 shrink-0 text-sm text-slate-500 font-semibold mb-1 md:mb-0">Locais que não abre mão:</div>
+                                    <div class="md:w-2/3 font-medium text-slate-800">${clientData.redeImportante && clientData.redeImportante.length > 0 ? clientData.redeImportante.join(' | ') : 'Sem preferências'}</div>
+                                </div>
+
+                                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col md:flex-row md:items-start md:gap-4">
+                                    <div class="md:w-1/3 shrink-0 text-sm text-slate-500 font-semibold mb-1 md:mb-0">Como ele quer que seja:</div>
+                                    <div class="md:w-2/3 font-medium text-slate-800">Quarto: ${conf.acomodacao} <br> Formato: ${conf.coparticipacao}</div>
+                                </div>
+                                
+                                <div class="bg-primary-50 p-4 rounded-lg border border-primary-200 flex flex-col md:flex-row md:items-start md:gap-4 shadow-sm">
+                                    <div class="md:w-1/3 shrink-0 text-sm text-primary-700 font-bold mb-1 md:mb-0 flex items-center gap-2">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        Apresentação da Proposta:
+                                    </div>
+                                    <div class="md:w-2/3 font-bold text-primary-900 text-lg">${dataFormatada} às ${clientData.horaReuniao || '--:--'}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 bg-slate-50 p-5 rounded-xl border border-slate-200 text-center shadow-inner">
+                                <h4 class="font-bold text-slate-700 border-b pb-2 mb-4">Sua Estratégia de Venda:</h4>
+                                <ul class="space-y-4 text-sm text-slate-600">
+                                    ${conf.coparticipacao.includes('Com') ? 
+                                        '<li class="flex items-start gap-3"><span class="text-green-500 text-lg">🎯</span> <span><strong>Ancoragem de Preço:</strong> Focar nas cotações com coparticipação, mostrando como a mensalidade vai ficar levinha pro bolso dele todo mês.</span></li>' : 
+                                        '<li class="flex items-start gap-3"><span class="text-blue-500 text-lg">🛡️</span> <span><strong>Paz de Espírito:</strong> Ele pediu previsibilidade. Monte opções SEM coparticipação para ele dormir tranquilo sabendo quanto vai pagar.</span></li>'
+                                    }
+                                    ${hist.temPlano === 'Ativo' ? 
+                                        '<li class="flex items-start gap-3"><span class="text-amber-500 text-lg">✂️</span> <span><strong>Trunfo:</strong> Analise o plano atual dele pra ver se dá pra fazer portabilidade ou compra de carência. É um p*ta argumento de venda.</span></li>' : ''
+                                    }
+                                    ${clientData.viagens && clientData.viagens.includes('Não') ?
+                                        '<li class="flex items-start gap-3"><span class="text-purple-500 text-lg">📍</span> <span><strong>Economia de Geolocalização:</strong> Já que ele não viaja, empurre forte nos planos de abrangência Regional ou Municipal. Vai baratear muito o custo.</span></li>' : ''
+                                    }
+                                    ${isPJ && (clientData.empresaVidas === '30-99' || clientData.empresaVidas === '100+') ?
+                                        '<li class="flex items-start gap-3"><span class="text-green-600 text-lg">👑</span> <span><strong>Argumento de Ouro:</strong> Empresa com +30 vidas = ISENÇÃO TOTAL DE CARÊNCIAS pela ANS. Use isso pra fechar o contrato hoje.</span></li>' : ''
+                                    }
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-indigo-50 p-5 rounded-xl border border-indigo-100 flex flex-col justify-center">
+                                <h4 class="font-bold text-indigo-900 mb-3 text-lg">Ação Imediata 🚀</h4>
+                                <p class="text-sm text-indigo-800 mb-4 leading-relaxed">Gere no seu cotador <strong>dois estudos de mercado (Opção A e B)</strong> usando o formato exato de <strong>${conf.acomodacao} ${conf.coparticipacao.toLowerCase()}</strong> que ele pediu.</p>
+                                <div class="bg-white p-3 border border-indigo-200 rounded-lg shadow-sm">
+                                    <p class="text-sm text-indigo-900 font-bold italic text-center">Ligue de volta e apresente as duas opções focando no "fator inegociável" dele.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-8 pt-6 border-t border-slate-200 no-print">
+                            <button onclick="resetPlaybook()" class="text-primary-600 hover:text-primary-800 font-bold bg-primary-50 px-8 py-4 rounded-xl border border-primary-200 transition-colors inline-flex items-center gap-2 hover:bg-primary-100 text-lg">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                Iniciar Novo Atendimento
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- CORE FUNCTIONS ---
+        function resetPlaybook() {
+            if(confirm("Deseja fechar este dossiê e iniciar um novo atendimento?")) {
+                const assessorSalvo = clientData.nomeAssessor; // Salva o nome do assessor
+                clientData = {
+                    nomeCliente: '', nomeAssessor: assessorSalvo,
+                    motivoBusca: null, elegibilidade: null, tipoPlano: null, tamanhoFamilia: 0, idades: [], dependentes: [],
+                    empresaVidas: 0, empresaCNPJ: '', empresaSegmento: null, empresaDetalhesVinculo: '',
+                    estado: '', cidade: '', bairro: '', viagens: null,
+                    planoAnterior: null, perfilUso: null, redeImportante: [],
+                    configDesejada: null,
+                    dataReuniao: '', horaReuniao: ''
+                };
+                loadModule(1);
+            }
+        }
+
+        window.onload = () => {
+            loadModule(1);
+        };
     </script>
 </body>
 </html>
